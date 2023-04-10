@@ -124,16 +124,6 @@ function getForm($index, $error){
         $username = htmlspecialchars($_POST['username']);
         $password = htmlspecialchars($_POST['password']);
 
-        $displayName = "";
-        $bio = "";
-
-        if(isset($_POST['displayName'])) {
-            $displayName = htmlspecialchars($_POST['displayName']);
-        }
-        if(isset($_POST['bio'])) {
-            $bio = htmlspecialchars($_POST['bio']);
-        }
-
         echo '<div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6">
@@ -142,20 +132,29 @@ function getForm($index, $error){
             <div class="text-center">
                         <p>Etape 3/3</p>
               <img src="assets/system/icon.svg" alt="logo" class="mb-3" width="72" height="72">
-              <h1 class="h3 mb-3">Beepot - Inscription</h1>
+              <h1 class="h3 mb-3">Beepot - Vérification</h1>
             </div>
             <form method="post" action="register.php">
-              <div class="form-group">
-                <label for="displayName">Nom d\'affichage</label>
-                <input value="' . $username . '" type="text" name="displayName" value="' . $displayName . '" class="form-control" required>
-              </div>
-                            <div class="form-group">
-                <label for="bio">Bio</label>
-                <textarea name="bio" class="form-control" required>' . $bio . '</textarea>
-              </div>
-				<input type="hidden" name="email" value="' . $email . '">
-				<input type="hidden" name="username" value="' . $username . '">
-				<input type="hidden" name="password" value="' . $password . '">
+            
+<div class="form-floating mb-3">
+  <input type="text" name="username" readonly class="form-control-plaintext" id="floatingPlaintextInput" value="' . $username . '">
+  <label for="floatingPlaintextInput">Nom d\'utilisateur</label>
+</div>
+<div class="form-floating mb-3">
+  <input type="email" name="email" readonly class="form-control-plaintext" id="floatingPlaintextInput" value="' . $email . '">
+  <label for="floatingPlaintextInput">Adresse mail</label>
+</div>
+<div class="form-floating mb-3">
+  <input type="password" name="password" readonly class="form-control-plaintext" id="floatingPlaintextInput" value="' . $password . '">
+  <label for="floatingPlaintextInput">Mot de passe</label>
+</div>
+<div class="form-check" style="text-align: left;">
+  <input class="form-check-input ' . needClass($error, 'conditions') . '" type="checkbox" name="acceptTOS" id="flexCheckDefault">
+  <label class="form-check-label" for="flexCheckDefault">
+    J\'accepte les <a href="#">conditions d\'utilisation de Beepot</a>.
+  </label>
+  
+</div>
               <input type="hidden" name="step" value="4">
               <button class="btn btn-lg btn-primary btn-block mt-4" type="submit">Valider</button>
             </form>
@@ -213,26 +212,36 @@ if(!isset($_POST['step'])) {
     $email = htmlspecialchars($_POST['email']);
     $password = htmlspecialchars($_POST['password']);
     $username = htmlspecialchars($_POST['username']);
+    $acceptTOS = "";
 
-    $displayName = htmlspecialchars($_POST['displayName']);
-    $bio = htmlspecialchars($_POST['bio']);
+    if(isset($_POST['acceptTOS'])) {
+        $acceptTOS = htmlspecialchars($_POST['acceptTOS']);
+    }
 
-    if(strlen($bio) > 500) {
-        getForm(3, "La bio est trop longue.");
+    if($acceptTOS != "on") {
+        getForm(3, "Les conditions d'utilisation doivent être acceptées.");
         return;
     }
 
-    if(strlen($displayName) > 50) {
-        getForm(3, "Le nom d'affichage est trop long.");
+    $email = htmlspecialchars($_POST['email']);
+    $username = htmlspecialchars($_POST['username']);
+
+    if(strlen($email) > 360 || !preg_match("/^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$/", $email)) {
+        getForm(1, "L'email est invalide");
+        return;
+    }
+
+    if(!preg_match("/^[A-Za-z0-9_-]{3,35}$/", $username)) {
+        getForm(1, "Le nom d'utilisateur est invalide");
         return;
     }
     if($isEmailUsed($email)) {
-        getForm(3, "Email déjà utilisée");
+        getForm(1, "Email déjà utilisée");
         return;
     }
 
     if($isUsernameUsed($username)) {
-        getForm(3, "Nom d'utilisateur déjà utilisée");
+        getForm(1, "Nom d'utilisateur déjà utilisée");
         return;
     }
 
