@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap');
+
+ul {
+    padding: 0;
+    margin:0;
+    text-align: center;
+    height: 100%;
+}
+.icon img {
+    width: 300px;
+}
+
+ul li {
+    list-style-type: none;
+}
+
+.notification_pin {
+    width: 30px;
+    height: 20px;
+    font-size: 12px;
+    font-style: normal;
+    position: fixed;
+    left: 45px;
+
+}
+
+.bi {
+    font-size: 30px;
+    color: #454545;
+}
+
+.bi:hover {
+    padding: 10px;
+    background-color: #dcdde1;
+    border: #dcdde1;
+    border-radius: 330px;
+    transition: 0.3s;
+}
+
+.waitLoad a {
+    display: none;
+}
+
+a {
+    outline: none;
+    border: none;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    background: #dfe9f5;
+}
+
+.nav_up {
+    justify-content: flex-start;
+}
+
+.nav_down {
+    margin-top: auto;
+    height: auto;
+}
+
+nav {
+    display: flex;
+
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: stretch;
+    position: fixed;
+    top:0;
+    bottom: 0;
+    height: 100vh;
+    left: 0;
+    background: #fff;
+    width: 90px;
+    transition: width 0.2s linear;
+    box-shadow: 0 20px 35px rgba(0,0,0,0.1);
+}
+
+li {
+    margin: 30px;
+}
+
+
+.logo img {
+    width: 50px;
+}
+
+@media only screen and (max-device-height: 589px) {
+
+    li {
+        margin: 1vh;
+    }
+
+    .bi {
+        font-size: 4vh;
+        color: #454545;
+        transition: 0.3s;
+    }
+
+    .nav_up {
+        height: 40vh;
+    }
+}
