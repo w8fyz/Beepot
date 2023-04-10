@@ -6,7 +6,9 @@ if(isset($_GET['status'])) {
         case "registerSuccess":
             message("Parfait ! Vous venez de recevoir un mail pour confirmer votre nouveau compte, merci de rejoindre la communauté de Beepot !");
             break;
-
+        case "loginSuccess":
+            message("Rebonjour ! Bon voyage sur Beepot, vous avez sûrement des choses à rattraper !");
+            break;
         default:
             break;
     }

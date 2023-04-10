@@ -7,12 +7,6 @@ require "utils/imports.php";
 
 
 
-
-function isActive() {
-
-}
-
-
 ?>
 <link rel="shortcut icon" href="./assets/system/icon.svg" type="image/x-icon">
 <link rel="stylesheet" href="./css/header.css">
@@ -26,53 +20,57 @@ function isActive() {
         <li class="waitLoad">
             <div class="spinner-grow text-secondary" role="status">
             </div>
-            <a href="#">
-                <i class="bi <?php isActive() ?> bi-house"></i>
+            <a href="index.php">
+                <i class="bi bi-house"></i>
             </a>
         </li>
         <li class="waitLoad">
             <div class="spinner-grow text-secondary" role="status">
             </div>
-            <a href="#">
+            <a href="search.php">
                 <i class="bi bi-search"></i>
             </a>
         </li>
+        <?php if($isLogged()) { ?>
         <li class="waitLoad">
             <div class="spinner-grow text-secondary" role="status">
             </div>
-            <a href="#">
+            <a href="notifications.php">
                 <i class="bi bi-bell">
                       <span class="notification_pin badge rounded-pill bg-danger">
     3
-    <span class="visually-hidden">unread messages</span>
+    <span class="visually-hidden">notifications</span>
                 </i>
 
             </a>
         </li>
+        <?php }?>
     </ul>
     </ul>
     <ul class="nav_down">
         <li class="waitLoad">
             <div class="spinner-grow text-secondary" role="status">
             </div>
-            <a href="#">
+            <a href="<?php if($isLogged()) { echo 'profil.php'; } else { echo 'login.php'; }?> ">
                 <i class="bi bi-person"></i>
             </a>
         </li>
         <li class="waitLoad">
             <div class="spinner-grow text-secondary" role="status">
             </div>
-            <a href="#">
+            <a href="settings.php">
                 <i class="bi bi-gear"></i>
             </a>
         </li>
+        <?php if($isLogged()) { ?>
         <li class="waitLoad">
             <div class="spinner-grow text-secondary" role="status">
             </div>
-            <a href="#">
+            <a href="logout.php">
                 <i class="bi bi-box-arrow-left"></i>
             </a>
         </li>
+        <?php }?>
     </ul>
 </nav>
 

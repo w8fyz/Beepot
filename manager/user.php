@@ -1,5 +1,5 @@
 <?php
-require "./utils/bdd.php";
+include_once("./utils/bdd.php");
 $bdd = initBDD();
 
 session_start();
@@ -10,6 +10,48 @@ $createUser = function($email, $password, $username) use ($bdd) {
         return null;
     }catch (Exception $e) {
         return $e->getMessage();
+    }
+};
+
+$isLogged = function () use ($bdd){
+  if(isset($_SESSION['user_id'])) {
+      $id = $_SESSION['user_id'];
+      $request = $bdd->prepare("SELECT * FROM user WHERE id = :id");
+      $request->execute(['id' => $id]);
+      if($request->rowCount()>0) {
+          return true;
+      } else {
+          $logOut();
+          return false;
+      }
+  }
+  return false;
+};
+
+$logOut = function () use ($bdd) {
+  $_SESSION['user_id'] = null;
+};
+
+$setLogged = function ($id) use ($bdd) {
+  $_SESSION['user_id'] = $id;
+};
+
+$getExactUser = function ($email) use ($bdd) {
+    $request = $bdd->prepare("SELECT * FROM user WHERE email = :email");
+    $request->execute(['email' => $email]);;
+    if($request->rowCount()>0) {
+        return $request->fetch(PDO::FETCH_OBJ);
+    } else {
+        return null;
+    }
+};
+
+$getUser = function () use ($bdd) {
+    if(isset($_SESSION['user_id'])) {
+        $id = $_SESSION['user_id'];
+        $request = $bdd->prepare("SELECT * FROM user WHERE id = :id");
+        $request->execute(['id' => $id]);
+        return $request->fetch(PDO::FETCH_OBJ);
     }
 };
 

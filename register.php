@@ -1,24 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Inscription</title>
-    <link rel="stylesheet" type="text/css" href="css/register.css">
-</head>
-<body>
+<link rel="shortcut icon" href="./assets/system/icon.svg" type="image/x-icon">
 
 <?php
-require "utils/imports.php";
-require "utils/handleErrors.php";
-require "manager/user.php";
 
-
-function needClass($error, $needed) {
-    if(strpos($error, $needed)) {
-        return "is-invalid";
-    }
-    return "";
+if($isLogged()) {
+    header("Location: index.php");
 }
-
 function getForm($index, $error){
     $username = "";
     $email = "";
@@ -27,20 +13,16 @@ function getForm($index, $error){
         $username = htmlspecialchars($_POST['username']);
     }
     if(isset($_POST['email'])) {
-       $email = htmlspecialchars($_POST['email']);
+        $email = htmlspecialchars($_POST['email']);
     }
     if($index == 1) {
 
         echo '
-<div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
         <div class="card mt-5">
           <div class="card-body">
             <div class="text-center">
-                        <p>Etape 1/3</p>
               <img src="assets/system/icon.svg" alt="logo" class="mb-3" width="72" height="72">
-              <h1 class="h3 mb-3">Beepot - Inscription</h1>
+              <h1 class="h3 mb-3">Inscription</h1>
             </div>
             <form method="post" action="register.php">
 <div class="input-group mb-3">
@@ -66,26 +48,23 @@ function getForm($index, $error){
               <input type="hidden" name="step" value="2">
               <button class="btn btn-lg btn-primary btn-block mt-4" type="submit">Continuer</button>
             </form>
+            <p>Etape 1/3</p>
           </div>
         </div>
+                              <span>Déjà un compte ? <a href="login.php">Connecte toi maintenant !</a></span>
       </div>
-    </div>
-  </div>
   ';
     } else if($index == 2) {
         $email = htmlspecialchars($_POST['email']);
         $username = htmlspecialchars($_POST['username']);
 
         echo '
-<div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
         <div class="card mt-5">
           <div class="card-body">
             <div class="text-center">
-                        <p>Etape 2/3</p>
+
               <img src="assets/system/icon.svg" alt="logo" class="mb-3" width="72" height="72">
-              <h1 class="h3 mb-3">Beepot - Inscription</h1>
+              <h1 class="h3 mb-3">Sécurisation</h1>
             </div>
             <form method="post" action="register.php">
 <div class="input-group mb-3">
@@ -112,27 +91,24 @@ function getForm($index, $error){
 				<input type="hidden" name="username" value="' . $username . '">
 				              <input type="hidden" name="step" value="3">
               <button class="btn btn-lg btn-primary btn-block mt-4" type="submit">Continuer</button>
+              
             </form>
+                                    <p>Etape 2/3</p>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
 		';
     } else if($index == 3) {
         $email = htmlspecialchars($_POST['email']);
         $username = htmlspecialchars($_POST['username']);
         $password = htmlspecialchars($_POST['password']);
 
-        echo '<div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
+        echo '
         <div class="card mt-5">
           <div class="card-body">
             <div class="text-center">
-                        <p>Etape 3/3</p>
+
               <img src="assets/system/icon.svg" alt="logo" class="mb-3" width="72" height="72">
-              <h1 class="h3 mb-3">Beepot - Vérification</h1>
+              <h1 class="h3 mb-3">Vérification</h1>
             </div>
             <form method="post" action="register.php">
             
@@ -158,13 +134,46 @@ function getForm($index, $error){
               <input type="hidden" name="step" value="4">
               <button class="btn btn-lg btn-primary btn-block mt-4" type="submit">Valider</button>
             </form>
+            <p>Etape 3/3</p>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>';
+        </div>';
     }
 }
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inscription</title>
+    <link rel="stylesheet" type="text/css" href="css/register.css">
+</head>
+<body>
+<svg viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet">
+    <path d="M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z" style="stroke: none; fill:#DFE9F5FF;"></path>
+</svg>
+<?php
+require "utils/imports.php";
+require "utils/handleErrors.php";
+require "manager/user.php";
+
+function needClass($error, $needed) {
+    if(strpos($error, $needed)) {
+        return "is-invalid";
+    }
+    return "";
+}
+
+?>
+
+<div class="container-xl">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-5">
+            <h1 class="title">Bienvenue sur Beepot !</h1>
+            <p class="subtitle">Beepot est un réseau social moderne et ouvert à tous pour partager son quotidien et apprendre sur l'actualité. Rejoignez Beepot et soyez partout, n'importe où.</p>
+        </div>
+        <div class="col-md-7">
+
+<?php
 
 
 if(!isset($_POST['step'])) {
@@ -257,7 +266,10 @@ if(!isset($_POST['step'])) {
     header("Location: index.php");
 }
 ?>
-
+        </div>
+    </div>
 </div>
+</div>
+
 </body>
 </html>

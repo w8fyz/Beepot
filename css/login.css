@@ -40,7 +40,7 @@ svg {
 }
 
 body {
-    overflow: hidden;
     width: 100%;
     vertical-align: middle;
+    overflow: hidden;
 }

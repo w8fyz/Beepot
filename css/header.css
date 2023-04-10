@@ -1,20 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap');
 
-ul {
+nav ul {
     padding: 0;
     margin:0;
     text-align: center;
     height: 100%;
 }
-.icon img {
+nav .icon img {
     width: 300px;
 }
 
-ul li {
+nav ul li {
     list-style-type: none;
 }
 
-.notification_pin {
+nav .notification_pin {
     width: 30px;
     height: 20px;
     font-size: 12px;
@@ -24,12 +24,12 @@ ul li {
 
 }
 
-.bi {
+nav .bi {
     font-size: 30px;
     color: #454545;
 }
 
-.bi:hover {
+nav .bi:hover {
     padding: 10px;
     background-color: #dcdde1;
     border: #dcdde1;
@@ -37,11 +37,11 @@ ul li {
     transition: 0.3s;
 }
 
-.waitLoad a {
+nav .waitLoad a {
     display: none;
 }
 
-a {
+nav a {
     outline: none;
     border: none;
     text-decoration: none;
@@ -53,11 +53,11 @@ body {
     background: #dfe9f5;
 }
 
-.nav_up {
+nav .nav_up {
     justify-content: flex-start;
 }
 
-.nav_down {
+nav .nav_down {
     margin-top: auto;
     height: auto;
 }
@@ -80,12 +80,12 @@ nav {
     box-shadow: 0 20px 35px rgba(0,0,0,0.1);
 }
 
-li {
+nav li {
     margin: 30px;
 }
 
 
-.logo img {
+nav .logo img {
     width: 50px;
 }
 
