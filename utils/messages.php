@@ -9,6 +9,9 @@ if(isset($_GET['status'])) {
         case "loginSuccess":
             message("Rebonjour ! Bon voyage sur Beepot, vous avez sûrement des choses à rattraper !");
             break;
+        case "beepSend":
+            message("Ton beep a bien été envoyé !");
+            break;
         default:
             break;
     }

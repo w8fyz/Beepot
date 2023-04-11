@@ -2,6 +2,9 @@
 
 <?php
 
+require "utils/handleErrors.php";
+include_once "manager/user.php";
+
 if($isLogged()) {
     header("Location: index.php");
 }
@@ -185,7 +188,7 @@ if(!isset($_POST['step'])) {
     $email = htmlspecialchars($_POST['email']);
     $username = htmlspecialchars($_POST['username']);
 
-    if(strlen($email) > 360 || !preg_match("/^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$/", $email)) {
+    if(strlen($email) > 360 || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         getForm(1, "L'email est invalide");
         return;
     }
@@ -195,7 +198,7 @@ if(!isset($_POST['step'])) {
         return;
     }
     if($isEmailUsed($email)) {
-        getForm(1, "Email déjà utilisée");
+        getForm(1, "L'email est déjà utilisée");
         return;
     }
 
@@ -235,7 +238,7 @@ if(!isset($_POST['step'])) {
     $email = htmlspecialchars($_POST['email']);
     $username = htmlspecialchars($_POST['username']);
 
-    if(strlen($email) > 360 || !preg_match("/^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$/", $email)) {
+    if(strlen($email) > 360 || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         getForm(1, "L'email est invalide");
         return;
     }
@@ -245,7 +248,7 @@ if(!isset($_POST['step'])) {
         return;
     }
     if($isEmailUsed($email)) {
-        getForm(1, "Email déjà utilisée");
+        getForm(1, "L'email est déjà utilisée");
         return;
     }
 

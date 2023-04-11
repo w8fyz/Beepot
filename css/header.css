@@ -37,6 +37,22 @@ nav .bi:hover {
     transition: 0.3s;
 }
 
+nav .waitLoad button {
+    display: none;
+}
+
+nav button:focus{
+    outline: none;
+}
+
+nav button {
+    outline: none;
+    border: none;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
 nav .waitLoad a {
     display: none;
 }
@@ -64,7 +80,6 @@ nav .nav_down {
 
 nav {
     display: flex;
-
     flex-direction: column;
     flex-wrap: nowrap;
     align-items: center;
@@ -91,17 +106,17 @@ nav .logo img {
 
 @media only screen and (max-device-height: 589px) {
 
-    li {
+    nav li {
         margin: 1vh;
     }
 
-    .bi {
+    nav .bi {
         font-size: 4vh;
         color: #454545;
         transition: 0.3s;
     }
 
-    .nav_up {
+    nav .nav_up {
         height: 40vh;
     }
 }
