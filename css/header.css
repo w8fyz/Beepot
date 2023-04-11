@@ -91,17 +91,17 @@ nav .logo img {
 
 @media only screen and (max-device-height: 589px) {
 
-    li {
+    nav li {
         margin: 1vh;
     }
 
-    .bi {
+    nav .bi {
         font-size: 4vh;
         color: #454545;
         transition: 0.3s;
     }
 
-    .nav_up {
+    nav .nav_up {
         height: 40vh;
     }
 }

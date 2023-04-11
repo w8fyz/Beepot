@@ -1,0 +1,30 @@
+.card {
+    margin-left: 100px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.card-title {
+    font-size: 1rem;
+}
+
+.card-text {
+    font-size: 1.4rem;
+}
+
+.card-text img {
+    max-width: 150%;
+    width: 150%;
+    height: auto;
+    margin-right: 10px;
+}
+
+.btn {
+    font-size: 2rem;
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
