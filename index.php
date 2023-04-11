@@ -24,6 +24,7 @@ $getTimeline();
 
 include "utils/messages.php";
 
+include "manager/createPost.php";
 ?>
 
 <script>
