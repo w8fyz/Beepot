@@ -24,7 +24,14 @@ $getTimeline();
 
 include "utils/messages.php";
 
+<<<<<<< HEAD
 include "manager/createPost.php";
+=======
+include "manager/post.php";
+
+formatBeep("Fyz (I made this 🥴)", "Fyz", "Woaaah, is that.. A... Post ??? Omggg", ["salut"], date('d-m-y h:i:s'), 10);
+loadBeep();
+>>>>>>> 6681218372b90f01f580ead3de31d5bdae515ef2
 ?>
 
 <script>

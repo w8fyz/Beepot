@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="css/post.css">
 
 <?php
+<<<<<<< HEAD
 include_once("./utils/bdd.php");
 $bdd = initBDD();
 
@@ -13,11 +14,30 @@ function initloadBeep($addImg) {
             <div style='width: 200px'>
                 <h5 class='card-title mb-0 placeholder-glow'><span class='placeholder col-10'></h5>
                 <p class='card-subtitle text-muted placeholder-glow'><span class='placeholder col-6'></p>
+=======
+
+function getMedias($medias) {
+    foreach ($medias as $media) {
+        //echo "<img src='assets/upload/$media->name'. class='img-fluid rounded m-1' alt='image 1'>";
+        return "<img src='https://via.placeholder.com/150x150' class='img-fluid rounded m-1' alt='image 1'>";
+    }
+}
+
+function loadBeep() {
+    echo "<div class='card mb-3' style='width: 50vw;'>
+    <div class='card-body'>
+        <div class='d-flex align-items-center'>
+            <img src='https://via.placeholder.com/50x50' class='rounded-circle me-3' alt='avatar'>
+            <div>
+                <h5 class='card-title placeholder-glow'><span class='placeholder col-6'></span></h5>
+                <p class='card-title placeholder-glow'><span class='placeholder col-6'></span></p>
+>>>>>>> 6681218372b90f01f580ead3de31d5bdae515ef2
             </div>
         </div>
         <p class='card-text placeholder-glow'>
               <span class='placeholder col-7'></span>
       <span class='placeholder col-4'></span>
+<<<<<<< HEAD
 </p>
         <div class='d-flex mt-3'>
             <div class='d-flex flex-wrap align-items-center placeholder-glow' style='display: block'>";
@@ -37,11 +57,27 @@ function initloadBeep($addImg) {
                 <button disabled type='button' class='btn btn-sm me-3'>
                     <div class='spinner-border text-warning' role='status'>
 </div></button> 
+=======
+      <span class='placeholder col-4'></span>
+</p>
+        <div class='d-flex justify-content-center mt-3'>
+            <div class='d-flex flex-wrap justify-content-center align-items-center'>" ."
+            </div>
+        </div>
+        <div class='d-flex justify-content-between align-items-center mt-3'>
+            <small class='text-muted '><span class='placeholder col-7'></span></small>
+            <div class='d-flex align-items-center'>
+                <button type='button' class='btn btn-outline-primary btn-sm me-3'>
+                    <i class='bi bi-hand-thumbs-up'></i>       <span class='placeholder col-3'></span>
+                </button>
+                <small class='text-muted placeholder-glow'><span class='placeholder col-2'></span></small>
+>>>>>>> 6681218372b90f01f580ead3de31d5bdae515ef2
             </div>
         </div>
     </div>
 </div>";
 }
+<<<<<<< HEAD
 function initformatBeep($id, $displayName, $username, $content, $medias = null, $date, $likes) {
     echo "<div id='beep-$id' class='loaded-beep card mb-3' onmousedown='clickPost(event)'>
     <div class='card-body'>
@@ -86,11 +122,38 @@ function initformatBeep($id, $displayName, $username, $content, $medias = null, 
                 </div>
             </div>
     <small class='text-muted removable  skipClickPost'>$date</small>
+=======
+function formatBeep($displayName, $username, $content, $medias, $date, $likes) {
+    echo "<div class='card mb-3' style='width: 50vw;'>
+    <div class='card-body'>
+        <div class='d-flex align-items-center'>
+            <img src='https://via.placeholder.com/50x50' class='rounded-circle me-3' alt='avatar'>
+            <div>
+                <h5 class='card-title mb-0'>$displayName</h5>
+                <p class='card-subtitle text-muted'>@$username</p>
+            </div>
+        </div>
+        <p class='card-text mt-3'>$content</p>
+        <div class='d-flex justify-content-center mt-3'>
+            <div class='d-flex flex-wrap justify-content-center align-items-center'>" .
+        getMedias($medias) ."
+            </div>
+        </div>
+        <div class='d-flex justify-content-between align-items-center mt-3'>
+            <small class='text-muted'>$date</small>
+            <div class='d-flex align-items-center'>
+                <button type='button' class='btn btn-outline-primary btn-sm me-3'>
+                    <i class='bi bi-hand-thumbs-up'></i> Nectar
+                </button>
+                <small class='text-muted'>$likes</small>
+            </div>
+>>>>>>> 6681218372b90f01f580ead3de31d5bdae515ef2
         </div>
     </div>
 </div>";
 }
 
+<<<<<<< HEAD
 function generateBeep($beep){
 
     require "manager/user.php";
@@ -138,3 +201,6 @@ $createNewPost = function($content) use ($bdd) {
         console.log("Hello World!")
     }
 </script>
+=======
+?>
+>>>>>>> 6681218372b90f01f580ead3de31d5bdae515ef2

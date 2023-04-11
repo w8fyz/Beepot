@@ -1,11 +1,15 @@
 .card {
+<<<<<<< HEAD
     min-font-size: 20vw;
+=======
+>>>>>>> 6681218372b90f01f580ead3de31d5bdae515ef2
     margin-left: 100px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .card-title {
+<<<<<<< HEAD
     font-size: 1vw;
 }
 
@@ -15,6 +19,13 @@
 
 .card-text {
     font-size: 1vw;
+=======
+    font-size: 1rem;
+}
+
+.card-text {
+    font-size: 1.4rem;
+>>>>>>> 6681218372b90f01f580ead3de31d5bdae515ef2
 }
 
 .card-text img {
@@ -24,6 +35,7 @@
     margin-right: 10px;
 }
 
+<<<<<<< HEAD
 
 .img-fluid {
     max-width: 25vw;
@@ -131,4 +143,14 @@
         max-width: 71%;
         width: 70% !important;
     }
+=======
+.btn {
+    font-size: 2rem;
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    display: block;
+>>>>>>> 6681218372b90f01f580ead3de31d5bdae515ef2
 }
