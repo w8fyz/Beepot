@@ -107,7 +107,7 @@ nav .logo img {
 @media only screen and (max-device-height: 589px) {
 
     nav li {
-        margin: 1vh;
+        margin: 0;
     }
 
     nav .bi {

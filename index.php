@@ -6,8 +6,6 @@ require "utils/handleErrors.php";
 <!doctype html>
 <html lang="fr">
 <head>
-    <meta http-equiv="Expires" content="Tue, 01 Jan 1995 12:12:12 GMT">
-    <meta http-equiv="Pragma" content="no-cache">
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -47,23 +45,17 @@ include "manager/createPost.php";
     var beeps = document.getElementsByClassName("loaded-beep");
     var last = beeps[beeps.length-1];
 
-    function appendHtml(el, str) {
-        var div = document.createElement('div');
-        div.innerHTML = str;
-        while (div.children.length > 0) {
-            el.appendChild(div.children[0]);
-        }
-    }
 
     window.addEventListener("scroll", (event) => {
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-            <?php
-            $lastID = "<script>document.write(last)</script>"
-            ?>
-            var html = HtmlSanitizer.SanitizeHtml("<?php echo $getTimeline($lastID);?>");
-            document.write(html);
-
-        }
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+               document.write(this.responseText);
+            }
+        };
+        usableID = last.id.split("-")[1];
+        xmlhttp.open("GET", "endpoint/getTimeline.php?lastID="+usableID, true);
+        xmlhttp.send();
     });
 </script>
 <body>

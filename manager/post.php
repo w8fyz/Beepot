@@ -85,7 +85,7 @@ function initformatBeep($id, $displayName, $username, $content, $medias = null, 
                 <small class='text-muted  skipClickPost'>$likes</small>
                 </div>
             </div>
-    <small class='text-muted removable  skipClickPost'>$date</small>
+    <small class='text-muted removable skipClickPost'>$date</small>
         </div>
     </div>
 </div>";
@@ -100,11 +100,17 @@ function generateBeep($beep){
     $author = $getUserById($beep->authorID);
     $content = $beep->content;
 
-    echo "<div class='beep-box'>";
-    echo initloadBeep(false);
-    echo initformatBeep($beep->id, $author->displayName, $author->username, $content, [0, 0, 0, 0], date( 'd-m-Y H:i:s', $creationDate ),0);
-    echo "</div>";
+    ?>
+        <div class='beep-box'>
+            <?=initloadBeep(false)?>
+            <?=initformatBeep($beep->id, $author->displayName, $author->username, $content, [0, 0, 0, 0], date( 'd-m-Y H:i:s', $creationDate ),0)?>
+        </div>
+    <?php
 }
+
+$getReadableTimeline = function ($lastID = 0) use ($bdd){
+    echo $getTimeline($lastID);
+};
 
 $getTimeline = function ($lastID = 0) use ($bdd){
     $request = $bdd->prepare("SELECT *, TIMESTAMPDIFF(SECOND,'1970-01-01 00:00:00', creationDate) AS creationTimestamp FROM post WHERE id > :id ORDER BY creationTimestamp DESC LIMIT 50");
