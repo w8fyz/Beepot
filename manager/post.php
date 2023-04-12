@@ -57,9 +57,9 @@ function initformatBeep($id, $displayName, $username, $content, $medias = null, 
             <div class='reduced-image-container d-flex flex-wrap align-items-center''>";
     if($medias != null) {
         foreach ($medias as $media) {
-             //$resolution = rand(150, 2000) . "x" . rand(150, 2000);
+             $resolution = rand(150, 2000);
             //echo "<img src='assets/upload/$media->name'. class='img-fluid rounded m-1' alt='image 1'>";
-            echo "<img src='https://via.placeholder.com/150x150' class='img-fluid rounded m-1' alt='image 1'>";
+            echo "<img src='https://picsum.photos/$resolution' class='img-fluid rounded m-1' alt='image 1'>";
         }
     }
     echo "</div>
@@ -88,7 +88,8 @@ function initformatBeep($id, $displayName, $username, $content, $medias = null, 
     <small class='text-muted removable skipClickPost'>$date</small>
         </div>
     </div>
-</div>";
+</div>
+";
 }
 
 function generateBeep($beep){
@@ -103,17 +104,13 @@ function generateBeep($beep){
     ?>
         <div class='beep-box'>
             <?=initloadBeep(false)?>
-            <?=initformatBeep($beep->id, $author->displayName, $author->username, $content, [0, 0, 0, 0], date( 'd-m-Y H:i:s', $creationDate ),0)?>
+            <?=initformatBeep($beep->id, $author->displayName, $author->username, $content, [0], date( 'd-m-Y H:i:s', $creationDate ),0)?>
         </div>
     <?php
 }
 
-$getReadableTimeline = function ($lastID = 0) use ($bdd){
-    echo $getTimeline($lastID);
-};
-
 $getTimeline = function ($lastID = 0) use ($bdd){
-    $request = $bdd->prepare("SELECT *, TIMESTAMPDIFF(SECOND,'1970-01-01 00:00:00', creationDate) AS creationTimestamp FROM post WHERE id > :id ORDER BY creationTimestamp DESC LIMIT 50");
+    $request = $bdd->prepare("SELECT *, TIMESTAMPDIFF(SECOND,'1970-01-01 00:00:00', creationDate) AS creationTimestamp FROM post WHERE id > :id ORDER BY creationTimestamp DESC LIMIT 10");
     $request->execute(['id' => $lastID]);
     if($request->rowCount()>0) {
         foreach ($request->fetchAll(PDO::FETCH_OBJ) as $beep) {
