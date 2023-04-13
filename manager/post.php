@@ -57,9 +57,9 @@ function initformatBeep($id, $displayName, $username, $content, $medias = null, 
             <div class='reduced-image-container d-flex flex-wrap align-items-center''>";
     if($medias != null) {
         foreach ($medias as $media) {
-             $resolution = rand(150, 2000);
+            // $resolution = rand(150, 2000);
             //echo "<img src='assets/upload/$media->name'. class='img-fluid rounded m-1' alt='image 1'>";
-            echo "<img src='https://picsum.photos/$resolution' class='img-fluid rounded m-1' alt='image 1'>";
+            echo "<img src='https://picsum.photos/200' class='img-fluid rounded m-1' alt='image 1'>";
         }
     }
     echo "</div>
@@ -126,6 +126,7 @@ $createNewPost = function($content) use ($bdd) {
     $user = $getUser();
     $request = $bdd->prepare("INSERT INTO post (authorID, content) VALUES (:authorID, :content)");
     $request->execute(['authorID' => $user->id, 'content' => $content]);
+    return $bdd->lastInsertId();
 }
 
 ?>

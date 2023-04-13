@@ -1,0 +1,23 @@
+#beepImagesPreview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#beepImagesPreview img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+#beepImagesPreview .close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    opacity: 0.7;
+}

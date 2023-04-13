@@ -1,37 +1,83 @@
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<?php
+#  if($_SERVER["REQUEST_METHOD"] != "POST") {
+?>
+
+<div class="modal fade" id="newBeepModal" tabindex="-1" aria-labelledby="newBeepModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Un nouveau Beep ?</h1>
+                <h5 class="modal-title" id="newBeepModalLabel">Nouveau Beep</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" action="index.php">
-                    <div class="mb-3">
-                        <textarea name="beep_content" class="form-control" id="message-text"></textarea>
+                <form id="newBeepForm">
+                    <div class="form-group">
+                        <textarea class="form-control" id="beepContent" rows="3" maxlength="1000" name="beepContent"></textarea>
+                        <small class="text-muted"><span id="charCount">0</span>/1000 caractères</small>
                     </div>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                    <button type="submit" class="btn btn-warning">Beep!</button>
+                    <div class="form-group">
+                        <label for="beepImages">Images (maximum 4)</label>
+                        <div class="input-group mb-3">
+                            <input style="display: none" type="file" class="form-control" id="beepImages" name="beepImages" accept="image/*" multiple>
+                            <button class="btn btn-outline-secondary" type="button" id="addImageButton">+</button>
+                        </div>
+                        <div id="beepImagesPreview" style="display: flex;"></div>
+                    </div>
                 </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" id="sendBeepButton">Beeper</button>
             </div>
         </div>
     </div>
 </div>
 
-<?php
+<script src="js/beepSend.js"></script>
 
-include_once("manager/user.php");
-include_once("manager/post.php");
+<?php #  } else {
 
-if(!$isLogged()) {
-    return;
-}
+$TESTVAR = "SAODKZADOZADKZAD";
 
-if(isset($_POST['beep_content'])) {
-    $content = htmlspecialchars($_POST['beep_content']);
-    $createNewPost($content);
-    $page = $_SERVER['PHP_SELF'];
-    echo '<meta http-equiv="Refresh" content="0;' . $page . '">';
-}
+        require "./utils/handleErrors.php";
 
-?>
+        include_once("./manager/user.php");
+        include_once("./manager/post.php");
+        if (!$isLogged()) {
+            return;
+        }
+        header("Content-Type: application/json");
+        echo json_encode(array("success" => true));
+        return;
+           # if (isset($_POST["beepContent"])) {
+            if(isset($TESTVAR)) {
+                echo "CALLED";
+              # $beepContent = htmlspecialchars($_POST["beepContent"]);
+                $beepContent = htmlspecialchars($TESTVAR);
+                # Traitement des images du beep
+                $beepImages = array();
+                for ($i = 0; $i < 4; $i++) {
+                    if (isset($_FILES["beepImage{$i}"]) && $_FILES["beepImage{$i}"]["error"] == 0) {
+                        $file = $_FILES["beepImage{$i}"];
+                        if (in_array($file["type"], array("image/jpeg", "image/png"))) {
+                            $filename = uniqid() . "_" . $file["name"];
+                            move_uploaded_file($file["tmp_name"], "assets/uploads/" . $filename);
+                            $beepImages[] = $filename;
+                        }
+                    }
+                }
+
+                include_once("./manager/files.php");
+                $beepId =  $createNewPost($beepContent);
+                foreach ($beepImages as $filename) {
+                    $createFile($beepId, $filename);
+                }
+                header("Content-Type: application/json");
+                echo json_encode(array("success" => true));
+            } else {
+                header("Content-Type: application/json");
+                echo json_encode(array("success" => false, "message" => "Le contenu du beep est requis."));
+            }
+
+
+  #  }
+    ?>

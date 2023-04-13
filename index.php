@@ -111,7 +111,6 @@ include "manager/createPost.php";
             xmlhttp.send();
         }
     });
-
 </script>
 <body>
 </body>
