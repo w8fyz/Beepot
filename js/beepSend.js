@@ -1,6 +1,4 @@
 const MAX_IMAGES = 4;
-
-// add event listener to the "Add Image" button
 const addImageButton = document.querySelector("#addImageButton");
 const beepImages = document.querySelector("#beepImages");
 const beepImagesPreview = document.querySelector("#beepImagesPreview");
@@ -11,14 +9,25 @@ addImageButton.addEventListener("click", () => {
     beepImages.click();
 });
 
-// add event listener to the file input for image preview
 beepImages.addEventListener("change", () => {
-    const image = beepImages.files[0];
+    Array.from(beepImages.files).forEach((image, index) => {
+       if(index <= MAX_IMAGES) {
+
+    if(image.size > 41943040) {
+        displayWarning("Le fichier ne doit pas faire plus de 5MB");
+        return;
+    }
+    const imageExt = image.name.slice((image.name.lastIndexOf(".") - 1 >>> 0) + 2);
+    if(["jpeg","jpg","png", "gif", "ico", "webp"].indexOf(imageExt) == -1) {
+        displayWarning("L'extension doit être parmis les suivantes : jpeg, ico, webp, jpg, png, gif.");
+        return;
+    }
     if (!image) {
         return;
     }
     const reader = new FileReader();
     reader.addEventListener("load", () => {
+        if(beepImagesPreview.querySelectorAll(".position-relative").length < MAX_IMAGES) {
         const img = document.createElement("img");
         img.classList.add("position-absolute");
         img.classList.add("top-0");
@@ -48,14 +57,18 @@ beepImages.addEventListener("change", () => {
         wrapper.appendChild(img);
         wrapper.appendChild(closeButton);
         beepImagesPreview.appendChild(wrapper);
+        updateImageCount();
+        }
     });
     reader.readAsDataURL(image);
     updateImageCount();
+       }
+    })
 });
 
-// update the image count and hide the "Add Image" button if necessary
 function updateImageCount() {
-    const imageCount = beepImagesPreview.children.length;
+    const imageCount = beepImagesPreview.querySelectorAll(".position-relative").length;
+    console.log(imageCount);
     if (imageCount >= MAX_IMAGES) {
         addImageButton.style.display = "none";
     } else {
@@ -63,16 +76,26 @@ function updateImageCount() {
     }
 }
 
-// add event listener to the text area for character count
 const beepContent = document.querySelector("#beepContent");
 const charCount = document.querySelector("#charCount");
 beepContent.addEventListener("input", () => {
     charCount.textContent = beepContent.value.length;
 });
 
-// add event listener to the "Envoyer" button for form submission
+
 const sendBeepButton = document.querySelector("#sendBeepButton");
 const newBeepForm = document.querySelector("#newBeepForm");
+
+const beepModalWarning = document.querySelector("#beepSendWarning");
+function displayWarning(responseElement) {
+    if(responseElement != "") {
+        beepModalWarning.style.display = "block";
+        beepModalWarning.textContent = responseElement;
+    } else {
+        beepModalWarning.style.display = "none";
+    }
+}
+
 sendBeepButton.addEventListener("click", () => {
     const formData = new FormData(newBeepForm);
     formData.delete("beepImages");
@@ -85,9 +108,19 @@ sendBeepButton.addEventListener("click", () => {
         method: "POST",
         body: formData,
     })
-        .then((response) => response.text())
+        .then((response) => response.json())
         .then((data) => {
-            console.log(data);
+            if(data == "") {
+                displayWarning("");
+                while(beepImages.lastElementChild) {
+                    beepImages.removeChild(beepImages.lastElementChild);
+                }
+                beepContent.textContent = "";
+                document.getElementById('newBeepClose').click();
+            } else {
+                displayWarning(data);
+            }
+
         })
         .catch((error) => {
             console.error(error);

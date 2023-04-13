@@ -55,9 +55,7 @@ function initformatBeep($id, $displayName, $username, $content, $medias = null, 
             <div class='reduced-image-container d-flex flex-wrap align-items-center''>";
     if($medias != null) {
         foreach ($medias as $media) {
-            // $resolution = rand(150, 2000);
-            //echo "<img src='assets/upload/$media->name'. class='img-fluid rounded m-1' alt='image 1'>";
-            echo "<img src='https://picsum.photos/200' class='img-fluid rounded m-1' alt='image 1'>";
+            echo "<img src='assets/uploads/$media->fileName' class='img-fluid rounded m-1' alt='image 1'>";
         }
     }
     echo "</div>
@@ -93,16 +91,18 @@ function initformatBeep($id, $displayName, $username, $content, $medias = null, 
 function generateBeep($beep){
 
     require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/user.php";
-
+    require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/files.php";
     $creationDate = $beep->creationTimestamp;
 
     $author = $getUserById($beep->authorID);
     $content = $beep->content;
 
+    $files = $getFiles($beep->id);
+
     ?>
         <div class='beep-box'>
             <?=initloadBeep(false)?>
-            <?=initformatBeep($beep->id, $author->displayName, $author->username, $content, [0], date( 'd-m-Y H:i:s', $creationDate ),0)?>
+            <?=initformatBeep($beep->id, $author->displayName, $author->username, $content, $files, date( 'd-m-Y H:i:s', $creationDate ),0)?>
         </div>
     <?php
 };

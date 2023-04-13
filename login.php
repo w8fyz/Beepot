@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Inscription</title>
+    <title>Connexion</title>
     <link rel="stylesheet" type="text/css" href="css/login.css">
 </head>
 <body>
@@ -12,8 +12,8 @@
 </svg>
 <?php
 require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/utils/imports.php";
-require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/handleErrors.php";
-require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/user.php";
+require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/utils/handleErrors.php";
+require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/user.php";
 
 if($isLogged()) {
     header("Location: index.php");
