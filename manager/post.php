@@ -1,10 +1,8 @@
-<link rel="stylesheet" href="css/post.css">
-
 <?php
-include_once("./utils/bdd.php");
+include_once(parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/bdd.php");
 $bdd = initBDD();
 
-require "manager/user.php";
+require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/user.php";
 function initloadBeep($addImg) {
     echo "<div class='loading-beep card mb-3'>
     <div class='card-body'>
@@ -94,7 +92,7 @@ function initformatBeep($id, $displayName, $username, $content, $medias = null, 
 
 function generateBeep($beep){
 
-    require "manager/user.php";
+    require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/user.php";
 
     $creationDate = $beep->creationTimestamp;
 
@@ -107,7 +105,7 @@ function generateBeep($beep){
             <?=initformatBeep($beep->id, $author->displayName, $author->username, $content, [0], date( 'd-m-Y H:i:s', $creationDate ),0)?>
         </div>
     <?php
-}
+};
 
 $getTimeline = function ($lastID = 0) use ($bdd){
     $request = $bdd->prepare("SELECT *, TIMESTAMPDIFF(SECOND,'1970-01-01 00:00:00', creationDate) AS creationTimestamp FROM post WHERE id > :id ORDER BY creationTimestamp DESC LIMIT 10");
@@ -122,23 +120,10 @@ $getTimeline = function ($lastID = 0) use ($bdd){
 };
 
 $createNewPost = function($content) use ($bdd) {
-    require "manager/user.php";
+    require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/user.php";
     $user = $getUser();
     $request = $bdd->prepare("INSERT INTO post (authorID, content) VALUES (:authorID, :content)");
     $request->execute(['authorID' => $user->id, 'content' => $content]);
     return $bdd->lastInsertId();
-}
-
+};
 ?>
-
-<script>
-    function clickPost(event) {
-        if (window.getSelection().toString().length > 0) {
-            return;
-        }
-        if(event.target.classList.contains("skipClickPost")) {
-            return;
-        }
-        console.log("Hello World!")
-    }
-</script>

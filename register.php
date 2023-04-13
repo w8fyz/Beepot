@@ -2,8 +2,8 @@
 
 <?php
 
-require "utils/handleErrors.php";
-include_once "manager/user.php";
+require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/utils/handleErrors.php";
+include_once parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/user.php";
 
 if($isLogged()) {
     header("Location: index.php");
@@ -155,9 +155,9 @@ function getForm($index, $error){
     <path d="M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z" style="stroke: none; fill:#DFE9F5FF;"></path>
 </svg>
 <?php
-require "utils/imports.php";
-require "utils/handleErrors.php";
-require "manager/user.php";
+require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/imports.php";
+require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/handleErrors.php";
+require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/user.php";
 
 function needClass($error, $needed) {
     if(strpos($error, $needed)) {

@@ -1,5 +1,5 @@
 <?php
-#  if($_SERVER["REQUEST_METHOD"] != "POST") {
+ if($_SERVER["REQUEST_METHOD"] != "POST") {
 ?>
 
 <div class="modal fade" id="newBeepModal" tabindex="-1" aria-labelledby="newBeepModalLabel" aria-hidden="true">
@@ -34,26 +34,22 @@
 
 <script src="js/beepSend.js"></script>
 
-<?php #  } else {
+<?php   } else {
 
-$TESTVAR = "SAODKZADOZADKZAD";
+     $env = parse_ini_file(dirname(__DIR__).'/.env');
+        require $env['DOC_ROOT'].'/manager/user.php';
 
-        require "./utils/handleErrors.php";
+        require $env['DOC_ROOT'].'/manager/post.php';
 
-        include_once("./manager/user.php");
-        include_once("./manager/post.php");
+
+
         if (!$isLogged()) {
+            echo json_encode(array("response" => "Tu n'es pas connecté !"));
             return;
         }
-        header("Content-Type: application/json");
-        echo json_encode(array("success" => true));
-        return;
-           # if (isset($_POST["beepContent"])) {
-            if(isset($TESTVAR)) {
-                echo "CALLED";
-              # $beepContent = htmlspecialchars($_POST["beepContent"]);
-                $beepContent = htmlspecialchars($TESTVAR);
-                # Traitement des images du beep
+
+           if (isset($_POST["beepContent"])) {
+              $beepContent = htmlspecialchars($_POST["beepContent"]);
                 $beepImages = array();
                 for ($i = 0; $i < 4; $i++) {
                     if (isset($_FILES["beepImage{$i}"]) && $_FILES["beepImage{$i}"]["error"] == 0) {
@@ -64,20 +60,17 @@ $TESTVAR = "SAODKZADOZADKZAD";
                             $beepImages[] = $filename;
                         }
                     }
-                }
 
-                include_once("./manager/files.php");
-                $beepId =  $createNewPost($beepContent);
-                foreach ($beepImages as $filename) {
-                    $createFile($beepId, $filename);
+                    include_once(parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/files.php");
+                    $beepId =  $createNewPost($beepContent);
+                    foreach ($beepImages as $filename) {
+                        $createFile($beepId, $filename);
+                    }
                 }
-                header("Content-Type: application/json");
                 echo json_encode(array("success" => true));
             } else {
-                header("Content-Type: application/json");
-                echo json_encode(array("success" => false, "message" => "Le contenu du beep est requis."));
+                echo json_encode(array("error" => "Le contenu du beep est requis."));
             }
 
-
-  #  }
+    }
     ?>

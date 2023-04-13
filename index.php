@@ -1,5 +1,5 @@
 <?php
-require "utils/handleErrors.php";
+require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/utils/handleErrors.php";
 
 ?>
 
@@ -14,9 +14,9 @@ require "utils/handleErrors.php";
 </head>
 
 <?php
-require "components/header.php";
+require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/components/header.php";
 
-include "manager/post.php";
+include parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/post.php";
 
 ?>
 
@@ -28,9 +28,9 @@ $getTimeline();
 
 echo "</div>";
 
-include "utils/messages.php";
+require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/utils/messages.php";
 
-include "manager/createPost.php";
+require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/createPost.php";
 ?>
 
 <script>
@@ -51,20 +51,16 @@ include "manager/createPost.php";
     var last = beeps[beeps.length-1];
 
     function onAllContentLoaded() {
-        console.log("onAllContentLoaded");
         const loadedDivs = containerFull.querySelectorAll('.loaded-beep');
         for (let i = 0; i < loadedDivs.length; i++) {
             const parent = loadedDivs[i].parentElement;
             const loader = parent.querySelector(".loading-beep");
-            console.log("Loader found: ", loader);
-            console.log("Loaded div found: ", loadedDivs[i]);
             loader.style.setProperty("display", "none");
             loadedDivs[i].style.setProperty("display", "block");
         }
     }
 
     function checkImagesLoaded(loadedDiv) {
-        console.log("Checking images loaded");
         let imagesLoaded = true;
         const images = loadedDiv.querySelectorAll('img');
         for (let i = 0; i < images.length; i++) {
@@ -73,19 +69,16 @@ include "manager/createPost.php";
                 break;
             }
         }
-        console.log("Images loaded: ", imagesLoaded);
         return imagesLoaded;
     }
 
     const containerFull = document.getElementById("beep-full-container");
 
     const observer = new MutationObserver(() => {
-        console.log("Mutation detected");
         const loadedDivs = containerFull.querySelectorAll('.loaded-beep');
         for (let i = 0; i < loadedDivs.length; i++) {
             if (checkImagesLoaded(loadedDivs[i])) {
-                console.log("All images in div loaded-beep are loaded!");
-                onAllContentLoaded();
+                 onAllContentLoaded();
             }
         }
     });
@@ -100,7 +93,6 @@ include "manager/createPost.php";
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    console.log("New beep-box loaded");
                     const beepBox = document.createElement('div');
                     beepBox.innerHTML = this.responseText;
                     containerFull.appendChild(beepBox);

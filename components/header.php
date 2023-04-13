@@ -1,9 +1,9 @@
 <?php
 
-require "utils/handleErrors.php";
-require "manager/user.php";
+require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/handleErrors.php";
+require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/user.php";
 
-require "utils/imports.php";
+require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/imports.php";
 
 
 

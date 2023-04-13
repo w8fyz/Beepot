@@ -1,7 +1,6 @@
 <?php
 function initBDD() {
-
-    $env = parse_ini_file('.env');
+    $env = parse_ini_file(dirname(__DIR__).'/.env');
 
     try {
         $conn = new PDO("mysql:host=" . $env['HOST'] . ";dbname=" . $env['BDD'], $env['USER'], $env['PASS']);

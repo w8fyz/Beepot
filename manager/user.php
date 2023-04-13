@@ -1,5 +1,5 @@
 <?php
-include_once("./utils/bdd.php");
+include_once(parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/bdd.php");
 $bdd = initBDD();
 if(session_status() != 2) {
     session_start();
