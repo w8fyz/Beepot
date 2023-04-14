@@ -23,7 +23,6 @@ include parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/po
 <div id="beep-full-container">
 
 <?php
-
 $getTimeline();
 
 echo "</div>";
@@ -32,6 +31,10 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/utils/mess
 
 require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/createPost.php";
 ?>
+
+    <div class="popup" id="popup">
+        + 30 Beeps
+    </div>
 
 <script>
  /*   window.addEventListener("load", () => {
@@ -44,9 +47,7 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/cr
     if ( window.history.replaceState ) {
         window.history.replaceState( null, null, window.location.href );
     }
-</script>
 
-<script>
     var beeps = document.getElementsByClassName("loaded-beep");
     var last = beeps[beeps.length-1];
 

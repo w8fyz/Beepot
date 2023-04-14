@@ -127,3 +127,4 @@ $createNewPost = function($content) use ($bdd) {
     return $bdd->lastInsertId();
 };
 ?>
+

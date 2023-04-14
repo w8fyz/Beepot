@@ -2,6 +2,8 @@ const MAX_IMAGES = 4;
 const addImageButton = document.querySelector("#addImageButton");
 const beepImages = document.querySelector("#beepImages");
 const beepImagesPreview = document.querySelector("#beepImagesPreview");
+const uploadedImages = [];
+
 addImageButton.addEventListener("click", () => {
     if (beepImagesPreview.children.length >= MAX_IMAGES) {
         return;
@@ -47,7 +49,7 @@ beepImages.addEventListener("change", () => {
         closeButton.innerHTML = "&times;";
         closeButton.addEventListener("click", () => {
             beepImagesPreview.removeChild(wrapper);
-            updateImageCount();
+            uploadedImages.splice(uploadedImages.indexOf(image), 1);
         });
         const wrapper = document.createElement("div");
         wrapper.classList.add("position-relative");
@@ -58,6 +60,7 @@ beepImages.addEventListener("change", () => {
         wrapper.appendChild(closeButton);
         beepImagesPreview.appendChild(wrapper);
         updateImageCount();
+        uploadedImages.push(image);
         }
     });
     reader.readAsDataURL(image);
@@ -99,8 +102,9 @@ function displayWarning(responseElement) {
 sendBeepButton.addEventListener("click", () => {
     const formData = new FormData(newBeepForm);
     formData.delete("beepImages");
-    const images = Array.from(beepImages.files).slice(0, MAX_IMAGES);
+    const images = Array.from(uploadedImages).slice(0, MAX_IMAGES);
     images.forEach((image, index) => {
+        console.log("IMAGES : "+image);
         formData.append(`beepImage${index}`, image);
     });
     console.log(formData);
@@ -110,13 +114,14 @@ sendBeepButton.addEventListener("click", () => {
     })
         .then((response) => response.json())
         .then((data) => {
-            if(data == "") {
+            if(data.startsWith('ID')) {
                 displayWarning("");
-                while(beepImages.lastElementChild) {
-                    beepImages.removeChild(beepImages.lastElementChild);
-                }
-                beepContent.textContent = "";
                 document.getElementById('newBeepClose').click();
+                location.reload();
+
+                const id = data.split('-')[1];
+                postMessage(id)
+
             } else {
                 displayWarning(data);
             }

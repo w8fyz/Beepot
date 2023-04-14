@@ -59,14 +59,12 @@
             return;
         }
 
-
            if (isset($_POST["beepContent"])  && strlen($_POST['beepContent']) > 0 && strlen($_POST['beepContent']) <= 1000) {
               $beepContent = htmlspecialchars($_POST["beepContent"]);
                 $beepImages = array();
                 for ($i = 0; $i < 4; $i++) {
                     if (isset($_FILES["beepImage{$i}"])) {
                         $file = $_FILES["beepImage{$i}"];
-
                         $file_name = $file['name'];
                         $file_size = $file['size'];
                         $file_tmp = $file['tmp_name'];
@@ -93,16 +91,14 @@
                         $filename = uniqid() . "." . $file_ext;
                         move_uploaded_file($file["tmp_name"],dirname(__DIR__)."/assets/uploads/" . $filename);
                         $beepImages[] = $filename;
-
-                        include_once(parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/files.php");
                     }
                 }
+               include_once(parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/files.php");
                $beepId =  $createNewPost($beepContent);
                foreach ($beepImages as $filename) {
                    $createFile($beepId, $filename);
                }
-
-                echo json_encode("");
+                echo json_encode("ID-".$getUser()->id);
                return;
             } else {
                 echo json_encode("Le beep doit faire entre 1 et 1000 caractères.");

@@ -88,7 +88,7 @@ if(isset($_POST['email']) && isset($_POST['password'])) {
     $email = htmlspecialchars($_POST['email']);
     $password = htmlspecialchars($_POST['password']);
 
-    if(strlen($email) > 360 || !preg_match("/^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$/", $email)) {
+    if(strlen($email) > 360 || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         getForm( "L'email est invalide");
         return;
     }
