@@ -10,6 +10,7 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/utils/hand
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/postPage.css">
     <title>Beepot</title>
 </head>
 
@@ -18,12 +19,18 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/components
 
 include parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/post.php";
 
-?>
+$last = $_GET['id'];
 
+echo "<a class='return_btn' href='index.php?last=$last'>";
+?>
+    <i class="bi bi-arrow-left-circle"></i>
+</a>
 <div id="beep-full-container">
 
 <?php
-$getTimeline();
+if(isset($_GET['id'])) {
+    $beep = $getBeep($_GET['id']);
+}
 
 echo "</div>";
 
@@ -32,27 +39,7 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/utils/mess
 require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/createPost.php";
 ?>
 
-    <div class="popup" id="popup" onclick="popupClick()">
-        + 30 Beeps
-    </div>
-
 <script>
-
-    function popupClick() {
-   //     location.reload();
-        window.scrollTo(0, 0);
-    }
-
- /*   window.addEventListener("load", () => {
-
-        for(const element of document.querySelectorAll(".beep-box")) {
-            graphicLoadBeep(element);
-        }
-    });*/
-
-    if ( window.history.replaceState ) {
-        window.history.replaceState( null, null, window.location.href );
-    }
 
     var beeps = document.getElementsByClassName("loaded-beep");
     var last = beeps[beeps.length-1];
@@ -121,7 +108,6 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/cr
         }
     });
 </script>
-    <script src="./js/scrollHistory.js"></script>
     <script src="./js/beepInteractions.js"></script>
 <body>
 </body>

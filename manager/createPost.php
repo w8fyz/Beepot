@@ -59,6 +59,8 @@
             return;
         }
 
+        $logs = [];
+
            if (isset($_POST["beepContent"])  && strlen($_POST['beepContent']) > 0 && strlen($_POST['beepContent']) <= 1000) {
               $beepContent = htmlspecialchars($_POST["beepContent"]);
                 $beepImages = array();
@@ -89,7 +91,7 @@
                         }
 
                         $filename = uniqid() . "." . $file_ext;
-                        move_uploaded_file($file["tmp_name"],dirname(__DIR__)."/assets/uploads/" . $filename);
+                        move_uploaded_file($file["tmp_name"],parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/assets/uploads/" . $filename);
                         $beepImages[] = $filename;
                     }
                 }

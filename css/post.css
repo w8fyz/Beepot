@@ -66,6 +66,24 @@
     transition: 0.3s;
 }
 
+
+.like .bi-heart-fill {
+    color: #e74c3c;
+}
+
+.boost .bi-rocket-takeoff-fill {
+    color: #00a8ff;
+}
+
+.like .bi-heart-fill:hover {
+    color: #c94536;
+}
+
+.boost .bi-rocket-takeoff-fill:hover {
+    color: #0187ce;
+}
+
+
 .interactions div {
     width: 40px;
     max-width: 50px;

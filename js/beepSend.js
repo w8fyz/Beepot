@@ -85,6 +85,11 @@ beepContent.addEventListener("input", () => {
     charCount.textContent = beepContent.value.length;
 });
 
+beepContent.addEventListener('keydown', (event) => {
+    if(event.ctrlKey && event.key == "Enter") {
+        sendBeepButton.click();
+    }
+});
 
 const sendBeepButton = document.querySelector("#sendBeepButton");
 const newBeepForm = document.querySelector("#newBeepForm");
@@ -100,14 +105,13 @@ function displayWarning(responseElement) {
 }
 
 sendBeepButton.addEventListener("click", () => {
+    sendBeepButton.disabled = true;
     const formData = new FormData(newBeepForm);
     formData.delete("beepImages");
     const images = Array.from(uploadedImages).slice(0, MAX_IMAGES);
     images.forEach((image, index) => {
-        console.log("IMAGES : "+image);
         formData.append(`beepImage${index}`, image);
     });
-    console.log(formData);
     fetch("manager/createPost.php", {
         method: "POST",
         body: formData,
@@ -115,12 +119,13 @@ sendBeepButton.addEventListener("click", () => {
         .then((response) => response.json())
         .then((data) => {
             if(data.startsWith('ID')) {
+                console.log("DATA : "+data)
                 displayWarning("");
                 document.getElementById('newBeepClose').click();
                 location.reload();
 
                 const id = data.split('-')[1];
-                postMessage(id)
+                conn.send(id);
 
             } else {
                 displayWarning(data);
@@ -131,3 +136,20 @@ sendBeepButton.addEventListener("click", () => {
             console.error(error);
         });
 });
+
+const newAuthors = [];
+function checkNewBeepsPopup(id) {
+    newAuthors.push(id);
+    if(newAuthors.length >= 5) {
+        popupNewTweet(newAuthors.length);
+        console.log(id);
+    }
+}
+
+function popupNewTweet(length) {
+    const element = document.getElementById("popup");
+    element.style.display = "block";
+    element.style.top = "0px";
+    element.textContent = "+ "+length+" Beeps";
+}
+

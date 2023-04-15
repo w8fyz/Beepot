@@ -46,8 +46,7 @@ require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/imports.php
             <li class="waitLoad">
                 <div class="spinner-grow text-secondary" role="status">
                 </div>
-                <button style="border-color: transparent !important;" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#newBeepModal">
-                    <i style="color: #FF9B00;" class="bi bi-pencil-square"></i> </button>
+                <a href="" style="border-color: transparent !important;" data-bs-toggle="modal" data-bs-target="#newBeepModal"><i style="color: #FF9B00;" class="bi bi-pencil-square"></i></a>
             </li>
         <?php }?>
     </ul>
