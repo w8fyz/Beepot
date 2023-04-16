@@ -71,7 +71,6 @@ beepImages.addEventListener("change", () => {
 
 function updateImageCount() {
     const imageCount = beepImagesPreview.querySelectorAll(".position-relative").length;
-    console.log(imageCount);
     if (imageCount >= MAX_IMAGES) {
         addImageButton.style.display = "none";
     } else {
@@ -119,7 +118,6 @@ sendBeepButton.addEventListener("click", () => {
         .then((response) => response.json())
         .then((data) => {
             if(data.startsWith('ID')) {
-                console.log("DATA : "+data)
                 displayWarning("");
                 document.getElementById('newBeepClose').click();
                 location.reload();
@@ -142,7 +140,6 @@ function checkNewBeepsPopup(id) {
     newAuthors.push(id);
     if(newAuthors.length >= 5) {
         popupNewTweet(newAuthors.length);
-        console.log(id);
     }
 }
 

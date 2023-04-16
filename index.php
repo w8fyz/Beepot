@@ -18,12 +18,13 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/components
 
 include parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/post.php";
 
+
 ?>
 
 <div id="beep-full-container">
 
+
 <?php
-$getTimeline();
 
 echo "</div>";
 
@@ -33,94 +34,9 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/cr
 ?>
 
     <div class="popup" id="popup" onclick="popupClick()">
-        + 30 Beeps
     </div>
 
-<script>
-
-    function popupClick() {
-   //     location.reload();
-        window.scrollTo(0, 0);
-    }
-
- /*   window.addEventListener("load", () => {
-
-        for(const element of document.querySelectorAll(".beep-box")) {
-            graphicLoadBeep(element);
-        }
-    });*/
-
-    if ( window.history.replaceState ) {
-        window.history.replaceState( null, null, window.location.href );
-    }
-
-    var beeps = document.getElementsByClassName("loaded-beep");
-    var last = beeps[beeps.length-1];
-
-    function onAllContentLoaded() {
-        const loadedDivs = containerFull.querySelectorAll('.loaded-beep');
-        for (let i = 0; i < loadedDivs.length; i++) {
-            const parent = loadedDivs[i].parentElement;
-            const loader = parent.querySelector(".loading-beep");
-            loader.style.setProperty("display", "none");
-            loadedDivs[i].style.setProperty("display", "block");
-        }
-    }
-
-    function checkImagesLoaded(loadedDiv) {
-        let imagesLoaded = true;
-        const images = loadedDiv.querySelectorAll('img');
-        for (let i = 0; i < images.length; i++) {
-            if (!images[i].complete) {
-                imagesLoaded = false;
-                break;
-            }
-        }
-        return imagesLoaded;
-    }
-
-    const containerFull = document.getElementById("beep-full-container");
-
-    const observer = new MutationObserver(() => {
-        const loadedDivs = containerFull.querySelectorAll('.loaded-beep');
-        for (let i = 0; i < loadedDivs.length; i++) {
-            if (checkImagesLoaded(loadedDivs[i])) {
-                 onAllContentLoaded();
-            }
-        }
-    });
-
-    window.addEventListener("load", (event) => {
-        observer.observe(containerFull, { childList: true, subtree: true });
-        onAllContentLoaded();
-    });
-
-    window.addEventListener("scroll", (event) => {
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-            let xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    const beepBox = document.createElement('div');
-                    beepBox.innerHTML = this.responseText;
-                    containerFull.appendChild(beepBox);
-                }
-            };
-            usableID = last.id.split("-")[1];
-            xmlhttp.open("GET", "getTimeline.php?lastID="+usableID, true);
-            xmlhttp.send();
-        } else {
-            let B = document.body;
-            let D = document.documentElement;
-            D = (D.clientHeight)? D: B;
-
-            if (D.scrollTop == 0){
-                if(newAuthors.length >= 1) {
-                    location.reload();
-                }
-            }
-        }
-    });
-</script>
+    <script src="./js/beepLoader.js"></script>
     <script src="./js/scrollHistory.js"></script>
     <script src="./js/beepInteractions.js"></script>
 <body>

@@ -12,14 +12,14 @@ require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/imports.php
 <nav>
     <ul class="nav_up">
         <li>
-            <a href="#" class="logo">
+            <a href="" onclick="resetTimeline()" class="timeline_reset logo">
                 <img style="width: 60px" src="./assets/system/icon.svg"/>
             </a>
         </li>
         <li class="waitLoad">
             <div class="spinner-grow text-secondary" role="status">
             </div>
-            <a href="index.php">
+            <a href="" onclick="resetTimeline()" class="timeline_reset">
                 <i class="bi bi-house"></i>
             </a>
         </li>

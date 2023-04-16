@@ -72,7 +72,7 @@
 }
 
 .boost .bi-rocket-takeoff-fill {
-    color: #00a8ff;
+    color: rgb(255, 155, 0);
 }
 
 .like .bi-heart-fill:hover {
@@ -80,7 +80,7 @@
 }
 
 .boost .bi-rocket-takeoff-fill:hover {
-    color: #0187ce;
+    color: rgb(215, 132, 0);
 }
 
 

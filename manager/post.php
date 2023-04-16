@@ -42,7 +42,7 @@ function initloadBeep($addImg) {
 }
 function initformatBeep($id, $idAuthor, $displayName, $username, $content, $medias = null, $date, $likes, $boost, $comments, $isLiked, $isBoosted) {
 
-    $dateFormated = date( 'd-m-Y H:i:s',$date);
+    $dateFormated = date( 'd/m/Y H:i:s',$date);
 
     echo "<div id='beep-$id' data-author='$idAuthor' class='loaded-beep card mb-3' onmousedown='clickPost(event)'>
     <div class='card-body'>
@@ -136,17 +136,20 @@ $getBeep = function ($id) use ($bdd) {
     }
 };
 
-$getTimeline = function ($lastID = 0) use ($bdd){
-    $request = $bdd->prepare("SELECT *, TIMESTAMPDIFF(SECOND,'1970-01-01 00:00:00', creationDate) AS creationTimestamp FROM post WHERE id > :id ORDER BY creationTimestamp DESC LIMIT 10");
+$getTimeline = function ($lastID = PHP_INT_MAX) use ($bdd){
+    //$request = $bdd->prepare("SELECT *, TIMESTAMPDIFF(SECOND,'1970-01-01 00:00:00', creationDate) AS creationTimestamp FROM post WHERE id > :id ORDER BY creationTimestamp DESC LIMIT 10");
+    $request = $bdd->prepare("SELECT *, TIMESTAMPDIFF(SECOND,'1970-01-01 00:00:00', creationDate) AS creationTimestamp FROM post WHERE id < :id ORDER BY id DESC LIMIT 10");
     $request->execute(['id' => $lastID]);
+    $match = [];
     if($request->rowCount()>0) {
 
         foreach ($request->fetchAll(PDO::FETCH_OBJ) as $beep) {
             generateBeep($beep);
+            $match[] = $beep;
         }
-    } else {
-        echo "<h1>Seulement toi, et moi :)</h1>";
     }
+    return $match;
+
 };
 
 $createNewPost = function($content) use ($bdd) {

@@ -1,4 +1,4 @@
-document.addEventListener("load", function(event) {
+/*document.addEventListener("load", function(event) {
     console.log("CALLED");
     if(getURLParameter("last") != null) {
         console.log("PARAM");
@@ -17,7 +17,7 @@ document.addEventListener("load", function(event) {
         });
         observer.observe(document.body, { childList: true, subtree: true });
     }
-});
+});*/
 
 
 

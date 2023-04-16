@@ -21,9 +21,9 @@ include parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/po
 
 $last = $_GET['id'];
 
-echo "<a class='return_btn' href='index.php?last=$last'>";
+echo "<button class='return_btn' href='' onclick='back()'><i class='bi bi-arrow-left-circle'></i></button>";
 ?>
-    <i class="bi bi-arrow-left-circle"></i>
+
 </a>
 <div id="beep-full-container">
 
@@ -40,6 +40,10 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/cr
 ?>
 
 <script>
+
+    function back(){
+        history.back();
+    }
 
     var beeps = document.getElementsByClassName("loaded-beep");
     var last = beeps[beeps.length-1];
@@ -93,7 +97,7 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/cr
                 }
             };
             usableID = last.id.split("-")[1];
-            xmlhttp.open("GET", "getTimeline.php?lastID="+usableID, true);
+            xmlhttp.open("GET", "endpoint/getTimeline.php?lastID="+usableID, true);
             xmlhttp.send();
         } else {
             let B = document.body;
