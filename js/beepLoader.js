@@ -102,4 +102,5 @@ function getTimeline(){
         }
         xmlhttp.open("GET", "endpoint/getTimeline.php?lastID=" + usableID, true);
         xmlhttp.send();
+
 }

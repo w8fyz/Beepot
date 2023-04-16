@@ -1,8 +1,10 @@
 .return_btn {
     margin-top: 20px;
-    padding-left: 6%;
+    padding-left: 120px;
     font-size: 40px;
     color: #FF9B00;
+    background: none;
+    border:none;
 }
 
 .beep-box{
@@ -13,4 +15,9 @@
     max-width: none;
     max-height: none;
     width: 250px;
+}
+
+.response_title {
+    padding-left: 125px;
+    opacity: 0.3;
 }

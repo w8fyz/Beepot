@@ -132,7 +132,6 @@ function getForm($index, $error){
   <label class="form-check-label" for="flexCheckDefault">
     J\'accepte les <a href="#">conditions d\'utilisation de Beepot</a>.
   </label>
-  
 </div>
               <input type="hidden" name="step" value="4">
               <button class="btn btn-lg btn-primary btn-block mt-4" type="submit">Valider</button>

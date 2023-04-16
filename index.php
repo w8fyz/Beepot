@@ -37,7 +37,6 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/cr
     </div>
 
     <script src="./js/beepLoader.js"></script>
-    <script src="./js/scrollHistory.js"></script>
     <script src="./js/beepInteractions.js"></script>
 <body>
 </body>

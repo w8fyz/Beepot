@@ -4,6 +4,11 @@ function interactLike(id) {
     })
         .then((response) => response.json())
         .then((data) => {
+            console.log(data);
+            if(data === "not_logged") {
+                window.location = "/login.php";
+                return;
+            }
           displayLike(id, data);
         })
         .catch((error) => {
@@ -32,6 +37,10 @@ function interactBoost(id) {
     })
         .then((response) => response.json())
         .then((data) => {
+            if(data === "NOT LOGGED") {
+                window.location = "/login.php";
+                return;
+            }
             displayBoost(id, data);
         })
         .catch((error) => {
@@ -55,5 +64,5 @@ function displayBoost(id, activated) {
 }
 
 function interactComment(id) {
-
+    console.log("hello world");
 }

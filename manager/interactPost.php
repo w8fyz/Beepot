@@ -7,7 +7,7 @@ if(isset($_GET['type']) && isset($_GET['target'])) {
     $env = parse_ini_file(dirname(__DIR__).'/.env');
     require $env['DOC_ROOT'].'/manager/user.php';
     if(!$isLogged()){
-        header("Location: /");
+        echo json_encode("false");
     }
     $type = $_GET['type'];
     $target = $_GET['target'];

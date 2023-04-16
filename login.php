@@ -8,7 +8,7 @@
 </head>
 <body>
 <svg viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet">
-    <path d="M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z" style="stroke: none; fill:#DFE9F5FF;"></path>
+    <path d="M0,100 C150,200  350,0 500,100 L500,00 L0,0 Z" style="stroke: none; fill:#DFE9F5FF;"></path>
 </svg>
 <?php
 require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/utils/imports.php";
@@ -57,6 +57,12 @@ function getForm($error) {
             ' . $error . '
   </div>
 </div>
+<div class="form-check" style="text-align: left;">
+  <input class="form-check-input" type="checkbox" name="rememberMe" id="flexCheckDefault" checked>
+  <label class="form-check-label" for="flexCheckDefault">
+    Se souvenir de moi
+  </label>
+</div>
               <button class="btn btn-lg btn-primary btn-block mt-4" type="submit">Connexion</button>
             </form>
                           <span>Pas encore de compte ? <a href="register.php">Inscrit toi maintenant !</a></span>
@@ -99,10 +105,10 @@ if(isset($_POST['email']) && isset($_POST['password'])) {
         return;
     }
 
-    $setLogged($tryUser->id);
+    $setLogged($tryUser->id, (isset($_POST['rememberMe']) && $_POST['rememberMe'] == "on"));
     header("Location: index.php?status=loginSuccess");
 } else {
-    getForm(1, "");
+    getForm(1);
 }
 ?>
 
