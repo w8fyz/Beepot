@@ -36,6 +36,15 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/cr
     <div class="popup" id="popup" onclick="popupClick()">
     </div>
 
+    <script src="./js/beepGenerator.js"></script>
+    <script>
+        if(localStorage.getItem("beeps") != null) {
+            document.querySelector("#beep-full-container").insertAdjacentHTML("beforeend",
+                localStorage.getItem("beeps"));
+        } else {
+            getTimeline();
+        }
+    </script>
     <script src="./js/beepLoader.js"></script>
     <script src="./js/beepInteractions.js"></script>
 <body>

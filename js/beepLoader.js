@@ -7,14 +7,6 @@ if (window.history.replaceState) {
     window.history.replaceState(null, null, window.location.href);
 }
 
-
-if(localStorage.getItem("beeps") != null) {
-    document.querySelector("#beep-full-container").insertAdjacentHTML("beforeend",
-        localStorage.getItem("beeps"));
-} else {
-    getTimeline();
-}
-
 window.addEventListener("load", (event) => {
     observer.observe(containerFull, {childList: true, subtree: true});
     onAllContentLoaded();
@@ -85,22 +77,4 @@ function resetTimeline() {
     window.scrollTo(0, 0);
     containerFull.innerHTML = "";
     getTimeline();
-}
-
-function getTimeline(){
-        let xmlhttp = new XMLHttpRequest();
-         xmlhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                document.querySelector("#beep-full-container").insertAdjacentHTML("beforeend",this.responseText);
-            }
-        };
-
-        const beeps = document.getElementsByClassName("loaded-beep");
-        let usableID = 9223372036854775807;
-        if(beeps.length > 0) {
-            usableID = beeps[beeps.length - 1].id.split("-")[1];
-        }
-        xmlhttp.open("GET", "endpoint/getTimeline.php?lastID=" + usableID, true);
-        xmlhttp.send();
-
 }
