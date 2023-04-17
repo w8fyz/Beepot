@@ -8,7 +8,19 @@ function getTimeline(){
             for (let i = 0; i < beeps.length; i++) {
                 let beep = beeps[i];
                 console.log("BEEP : "+i);
-                generateBeep(beep, getBasicUserInfo(beep.authorID), getFiles(beep.id), isInteracting("LIKE", beep.id), isInteracting("BOOST", beep.id), getNumberOfInteraction("LIKE", beep.id), getNumberOfInteraction("BOOST", beep.id), getNumberOfInteraction("COMMENT", beep.id));
+
+                let isBoosting = "";
+                let isLiking = "";
+                if(isInteracting("BOOST", beep.id)) {
+                    isBoosting = "-full";
+                }
+                if(isInteracting("LIKE", beep.id)) {
+                    isLiking = "-full";
+                }
+
+                let user = getBasicUserInfo(beep.authorID);
+                console.log(beep.authorID);
+                generateBeep(beep, user, getFiles(beep.id), isBoosting, isLiking, getNumberOfInteraction("LIKE", beep.id), getNumberOfInteraction("BOOST", beep.id), getNumberOfInteraction("COMMENT", beep.id));
             }
         }
     };
@@ -44,7 +56,9 @@ function getBasicUserInfo(id) {
     })
         .then((response) => response.json())
         .then((data) => {
-            if(data.length > 5) {
+
+            if(JSON.stringify(data).length > 5) {
+                console.log("D CALLED : "+JSON.stringify(data));
                 return JSON.parse(data);
             }
             return false;
@@ -95,10 +109,11 @@ function mediasHTML(medias) {
 
 
 function generateBeep(beep, user, files, isBoosting, isLiking, likes, boosts, comments) {
+    console.log(user);
     const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
-    return new Intl.DateTimeFormat('fr-FR', options).format(new Date(beep.creationDate));
+    const dateFormatted = new Intl.DateTimeFormat('fr-FR', options).format(new Date(beep.creationDate));
     const beepHtml = `
-    <div id="beep-${id}" data-author="${user.id}" class="loaded-beep card mb-3" onmousedown="clickPost(event)">
+    <div id="beep-${beep.id}" data-author="${user.id}" class="loaded-beep card mb-3" onmousedown="clickPost(event)">
         <div class="card-body">
             <div class="d-flex align-items-center">
                 <img src="https://via.placeholder.com/50x50" class="rounded-circle me-3 skipClickPost" alt="avatar">
@@ -120,7 +135,9 @@ function generateBeep(beep, user, files, isBoosting, isLiking, likes, boosts, co
                         <small class="text-muted skipClickPost">${boosts}</small>
                     </div>
                     <div class="like" onclick="interactLike(${beep.id})">
-                        ${likeButton.outerHTML}
+                        <button style="border-color: transparent !important;" type="button" class="btn btn-sm me-3 skipClickPost">
+                            <i class="skipClickPost bi bi-heart${isLiking}"></i>
+                        </button>
                         <small class="text-muted skipClickPost">${likes}</small>
                     </div>
                     <div class="comment" onclick="interactComment(${beep.id})">
