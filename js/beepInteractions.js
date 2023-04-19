@@ -29,6 +29,7 @@ function displayLike(id, activated) {
         ico.classList.add("bi-heart-fill");
         ico.classList.remove("bi-heart");
     }
+    localStorage.setItem("beeps", document.querySelector("#beep-full-container").innerHTML);
 }
 
 function interactBoost(id) {
@@ -46,6 +47,7 @@ function interactBoost(id) {
         .catch((error) => {
             console.error(error);
         });
+
 }
 
 function displayBoost(id, activated) {
@@ -61,6 +63,7 @@ function displayBoost(id, activated) {
         ico.classList.add("bi-rocket-takeoff-fill");
         ico.classList.remove("bi-rocket-takeoff");
     }
+    localStorage.setItem("beeps", document.querySelector("#beep-full-container").innerHTML);
 }
 
 function interactComment(id) {

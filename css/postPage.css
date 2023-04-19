@@ -21,3 +21,7 @@
     padding-left: 125px;
     opacity: 0.3;
 }
+
+#noclick-beep div{
+    cursor: default;
+}

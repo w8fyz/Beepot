@@ -26,12 +26,12 @@ echo "<button class='return_btn' href='' onclick='back()'><i class='bi bi-arrow-
 
 </a>
 <div id="beep-full-container">
-
+<div id="noclick-beep">
 <?php
 if(isset($_GET['id'])) {
     $beep = $getBeep($_GET['id']);
 
-    echo "<h1 class='response_title'>―――――――</h1>";
+    echo "</div><h1 class='response_title'>―――――――</h1>";
 
     $getResponses($_GET['id']);
 

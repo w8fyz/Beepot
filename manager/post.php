@@ -142,11 +142,13 @@ $getTimeline = function ($lastID = PHP_INT_MAX) use ($bdd){
     $request->execute(['id' => $lastID]);
     $match = [];
     if($request->rowCount()>0) {
+
         foreach ($request->fetchAll(PDO::FETCH_OBJ) as $beep) {
+            generateBeep($beep);
             $match[] = $beep;
         }
-        echo json_encode($match);
     }
+    return $match;
 
 };
 
