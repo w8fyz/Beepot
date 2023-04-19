@@ -1,26 +1,29 @@
 const beepContainer = document.querySelector("#beep-full-container");
-function getTimeline(){
+async function getTimeline(){
     console.log("START");
     let xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
+    xmlhttp.onreadystatechange = async function () {
         if (this.readyState == 4 && this.status == 200) {
             let beeps = JSON.parse(this.responseText);
             for (let i = 0; i < beeps.length; i++) {
                 let beep = beeps[i];
-                console.log("BEEP : "+i);
-
+                console.log("BEEP : " + i);
+                let user = await getBasicUserInfo(beep.authorID);
                 let isBoosting = "";
                 let isLiking = "";
-                if(isInteracting("BOOST", beep.id)) {
+                if (await isInteracting("BOOST", beep.id)) {
                     isBoosting = "-full";
                 }
-                if(isInteracting("LIKE", beep.id)) {
+                if (await isInteracting("LIKE", beep.id)) {
                     isLiking = "-full";
                 }
 
-                let user = getBasicUserInfo(beep.authorID);
+                let nbLike = await getNumberOfInteraction("LIKE", beep.id);
+                let nbBoost = await getNumberOfInteraction("BOOST", beep.id);
+                let nbComment = await getNumberOfInteraction("COMMENT", beep.id);
+
                 console.log(beep.authorID);
-                generateBeep(beep, user, getFiles(beep.id), isBoosting, isLiking, getNumberOfInteraction("LIKE", beep.id), getNumberOfInteraction("BOOST", beep.id), getNumberOfInteraction("COMMENT", beep.id));
+                generateBeep(beep, user, null, isBoosting, isLiking,  nbLike, nbBoost, nbComment);
             }
         }
     };
@@ -35,7 +38,7 @@ function getTimeline(){
 
 }
 
-function getFiles(id) {
+async function getFiles(id) {
     fetch("endpoint/getBeepFiles.php?idPost="+id, {
         method: "GET",
     })
@@ -50,7 +53,7 @@ function getFiles(id) {
             console.error(error);
         });
 }
-function getBasicUserInfo(id) {
+async function getBasicUserInfo(id) {
     fetch("endpoint/getBasicUser.php?id="+id, {
         method: "GET",
     })
@@ -58,8 +61,7 @@ function getBasicUserInfo(id) {
         .then((data) => {
 
             if(JSON.stringify(data).length > 5) {
-                console.log("D CALLED : "+JSON.stringify(data));
-                return JSON.parse(data);
+                return data;
             }
             return false;
         })
@@ -68,7 +70,7 @@ function getBasicUserInfo(id) {
         });
 }
 
-function getNumberOfInteraction(type, id) {
+async function getNumberOfInteraction(type, id) {
     fetch("endpoint/getInteraction.php?type="+type+"&target="+id, {
         method: "GET",
     })
@@ -81,7 +83,7 @@ function getNumberOfInteraction(type, id) {
         });
 }
 
-function isInteracting(id, type) {
+async function isInteracting(id, type) {
     fetch("endpoint/isInteracting.php?type="+type+"&target="+id, {
         method: "GET",
     })
@@ -107,12 +109,39 @@ function mediasHTML(medias) {
     return `<div class='reduced-image-container d-flex flex-wrap align-items-center'>${html}</div>`;
 }
 
+const loadHtml = `<div class='loading-beep card mb-3'>
+    <div class='card-body'>
+        <div class='d-flex align-items-center'>
+            <div class='placeholder-glow rounded-circle me-3' alt='avatar'><span style='width: 50px; height: 50px; border-radius: 50px;' class='placeholder col-4'></span></div>
+            <div style='width: 200px'>
+                <h5 class='card-title mb-0 placeholder-glow'><span class='placeholder col-10'></h5>
+                <p class='card-subtitle text-muted placeholder-glow'><span class='placeholder col-6'></p>
+            </div>
+        </div>
+        <p class='card-text placeholder-glow'>
+              <span class='placeholder col-7'></span>
+      <span class='placeholder col-4'></span>
+</p>
+        <div class='d-flex mt-3'>
+            <div class='d-flex flex-wrap align-items-center placeholder-glow' style='display: block'></div>
+        </div>
+        <div class='d-flex justify-content-between align-items-center mt-3'>
+            <small style='width: 200px;' class='text-muted placeholder-glow'><span class='placeholder col-7'></span></small>
+            <div class='d-flex align-items-center'>
+                <button disabled type='button' class='btn btn-sm me-3'>
+                    <div class='spinner-border text-warning' role='status'>
+</div></button> 
+            </div>
+        </div>
+    </div>
+</div>`;
 
 function generateBeep(beep, user, files, isBoosting, isLiking, likes, boosts, comments) {
     console.log(user);
     const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
     const dateFormatted = new Intl.DateTimeFormat('fr-FR', options).format(new Date(beep.creationDate));
     const beepHtml = `
+<div class="beep-box">
     <div id="beep-${beep.id}" data-author="${user.id}" class="loaded-beep card mb-3" onmousedown="clickPost(event)">
         <div class="card-body">
             <div class="d-flex align-items-center">
@@ -151,7 +180,11 @@ function generateBeep(beep, user, files, isBoosting, isLiking, likes, boosts, co
             </div>
         </div>
     </div>
-`;
+    `+loadHtml+
+        `</div>`;
+
+
+
     console.log("CALLED : "+beepHtml);
     beepContainer.insertAdjacentHTML("afterbegin", beepHtml);
 }

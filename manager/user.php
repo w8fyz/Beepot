@@ -56,12 +56,6 @@ $getExactUser = function ($email) use ($bdd) {
     }
 };
 
-$getBasicUserById = function ($id) use ($bdd) {
-    $request = $bdd->prepare("SELECT id, displayName, username, profile_picture FROM user WHERE id = :id");
-    $request->execute(['id' => $id]);
-    return $request->fetch(PDO::FETCH_OBJ);
-};
-
 $getUserById = function ($id) use ($bdd) {
     $request = $bdd->prepare("SELECT * FROM user WHERE id = :id");
     $request->execute(['id' => $id]);
@@ -91,9 +85,8 @@ if(!function_exists('refreshSessionByCookie')) {
 $getUser = function () use ($bdd) {
     $id = "";
     if(!isset($_SESSION['user_id'])) {
-        refreshSessionByCookie();
+       refreshSessionByCookie();
     }
-    if(!isset($_SESSION['user_id'])) return;
     $id = $_SESSION['user_id'];
     $request = $bdd->prepare("SELECT * FROM user WHERE id = :id");
     $request->execute(['id' => $id]);
