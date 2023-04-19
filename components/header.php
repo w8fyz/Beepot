@@ -36,9 +36,7 @@ require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/imports.php
             </div>
             <a href="notifications.php">
                 <i class="bi bi-bell">
-                      <span class="notification_pin badge rounded-pill bg-danger">
-    3
-    <span class="visually-hidden">notifications</span>
+
                 </i>
 
             </a>
