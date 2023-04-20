@@ -109,7 +109,7 @@ function getTimeline(){
             }
         };
 
-        const beeps = document.getElementsByClassName("loaded-beep");
+        let beeps = document.getElementsByClassName("loaded-beep");
         let usableID = 9223372036854775807;
         if(beeps.length > 0) {
             usableID = beeps[beeps.length - 1].id.split("-")[1];

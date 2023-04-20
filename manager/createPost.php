@@ -38,13 +38,6 @@
 
 <?php   } else {
 
-     function folder_exist($folder)
-     {
-         $path = realpath($folder);
-
-         return ($path !== false AND is_dir($path)) ? $path : false;
-     }
-
      $env = parse_ini_file(dirname(__DIR__).'/.env');
         require $env['DOC_ROOT'].'/manager/user.php';
 
@@ -94,7 +87,13 @@
                     }
                 }
                include_once(parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/files.php");
-               $beepId =  $createNewPost($beepContent);
+               $beepId = "";
+                if(!isset($_POST['idParent'])) {
+                   $beepId =  $createNewPost($beepContent);
+               } else {
+                   $beepId =  $createNewReply($beepContent, htmlspecialchars($_POST['idParent']));
+               }
+
                foreach ($beepImages as $filename) {
                    $createFile($beepId, $filename);
                }

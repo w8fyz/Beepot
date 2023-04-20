@@ -174,5 +174,13 @@ $createNewPost = function($content) use ($bdd) {
     $request->execute(['authorID' => $user->id, 'content' => $content]);
     return $bdd->lastInsertId();
 };
+
+$createNewReply = function($content, $idParent) use ($bdd) {
+    require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/user.php";
+    $user = $getUser();
+    $request = $bdd->prepare("INSERT INTO post (authorID, content, idParent) VALUES (:authorID, :content, :idParent)");
+    $request->execute(['authorID' => $user->id, 'content' => $content, 'idParent' => $idParent]);
+    return $bdd->lastInsertId();
+};
 ?>
 

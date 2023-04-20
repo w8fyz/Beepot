@@ -17,13 +17,3 @@ function clickPost(event) {
 }
 
 
-function findParent(toFind, element) {
-    let currentElement = element;
-    while (currentElement.parentNode) {
-        currentElement = currentElement.parentNode;
-        if (currentElement.id && currentElement.id.startsWith(toFind)) {
-            return currentElement;
-        }
-    }
-    return null;
-}

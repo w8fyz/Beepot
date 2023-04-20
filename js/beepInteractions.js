@@ -6,13 +6,13 @@ function interactLike(id) {
         .then((data) => {
             console.log(data);
             if(data === "not_logged") {
-                window.location = "/login.php";
+                window.location = "register.php";
                 return;
             }
           displayLike(id, data);
         })
         .catch((error) => {
-            console.error(error);
+            window.location = "register.php";
         });
 }
 
@@ -39,13 +39,13 @@ function interactBoost(id) {
         .then((response) => response.json())
         .then((data) => {
             if(data === "NOT LOGGED") {
-                window.location = "/login.php";
+                window.location = "register.php";
                 return;
             }
             displayBoost(id, data);
         })
         .catch((error) => {
-            console.error(error);
+            window.location = "register.php";
         });
 
 }
@@ -67,5 +67,12 @@ function displayBoost(id, activated) {
 }
 
 function interactComment(id) {
-    console.log("hello world");
+    console.log(id);
+    let beep = document.querySelector("#beep-"+id)
+    if(findParent("noclick-beep", beep)) {
+        let replyModal = document.querySelector("#replyModal");
+        new bootstrap.Modal(replyModal).show();
+    } else {
+        window.location = "beep.php?id="+id+"&action=reply";
+    }
 }

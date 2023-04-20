@@ -31,7 +31,7 @@ $isLogged = function () use ($bdd){
 
 $logOut = function () use ($bdd) {
   $_SESSION['user_id'] = null;
-  setcookie('remember_user', null, -1, '/');
+  setcookie('remember_user', null, -1);
 
 };
 
@@ -42,7 +42,7 @@ $setLogged = function ($id, $cookie) use ($bdd) {
       $value = id.':'.time();
       $hash = hash_hmac('sha256', $value, $key);
       $value = $value.':'.$hash;
-      setcookie('remember_user', $value, time() + 2592000, '/', 'fyz.dynamic-dns.net', true, true);
+      setcookie('remember_user', $value, time() + 2592000);
   }
 };
 
@@ -65,6 +65,7 @@ $getUserById = function ($id) use ($bdd) {
 if(!function_exists('refreshSessionByCookie')) {
     function refreshSessionByCookie()
     {
+        var_dump($_COOKIE);
         if (isset($_COOKIE['remember_user'])) {
             $cookie = $_COOKIE['remember_user'];
             $key = parse_ini_file(dirname(__DIR__) . '/.env')['SHA_KEY'];
@@ -83,7 +84,6 @@ if(!function_exists('refreshSessionByCookie')) {
 }
 
 $getUser = function () use ($bdd) {
-    $id = "";
     if(!isset($_SESSION['user_id'])) {
        refreshSessionByCookie();
     }

@@ -21,7 +21,7 @@ include parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/po
 
 $last = $_GET['id'];
 
-echo "<button class='return_btn' href='' onclick='back()'><i class='bi bi-arrow-left-circle'></i></button>";
+echo "<body><button class='return_btn' href='' onclick='back()'><i class='bi bi-arrow-left-circle'></i></button>";
 ?>
 
 </a>
@@ -29,11 +29,12 @@ echo "<button class='return_btn' href='' onclick='back()'><i class='bi bi-arrow-
 <div id="noclick-beep">
 <?php
 if(isset($_GET['id'])) {
-    $beep = $getBeep($_GET['id']);
+    $id = htmlspecialchars($_GET['id']);
+    $beep = $getBeep($id);
 
     echo "</div><h1 class='response_title'>―――――――</h1>";
 
-    $getResponses($_GET['id']);
+    $getResponses($id);
 
 
 }
@@ -42,7 +43,8 @@ echo "</div>";
 
 require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/utils/messages.php";
 
-require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/createPost.php";
+require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/createReply.php";
+getReplyModal($id);
 ?>
 
 <script>
@@ -91,34 +93,7 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/cr
         observer.observe(containerFull, { childList: true, subtree: true });
         onAllContentLoaded();
     });
-
-    window.addEventListener("scroll", (event) => {
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-            let xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    const beepBox = document.createElement('div');
-                    beepBox.innerHTML = this.responseText;
-                    containerFull.appendChild(beepBox);
-                }
-            };
-            usableID = last.id.split("-")[1];
-            xmlhttp.open("GET", "endpoint/getTimeline.php?lastID="+usableID, true);
-            xmlhttp.send();
-        } else {
-            let B = document.body;
-            let D = document.documentElement;
-            D = (D.clientHeight)? D: B;
-
-            if (D.scrollTop == 0){
-                if(newAuthors.length >= 1) {
-                    location.reload();
-                }
-            }
-        }
-    });
 </script>
-    <script src="./js/beepInteractions.js"></script>
-<body>
-</body>
+    <script src="./js/beepSend.js"></script>
+    </body>
 </html>
