@@ -95,6 +95,10 @@ timelineResetter.forEach((btn) => {
     });
 });
 
+function headerToTimeline() {
+    if()
+}
+
 function resetTimeline() {
     window.scrollTo(0, 0);
     containerFull.innerHTML = "";

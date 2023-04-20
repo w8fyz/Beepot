@@ -14,7 +14,7 @@ setTimeout(function () {
     if(parameters.length >= 2 && (parameters[1].includes("status=") || parameters[1].includes("action="))) {
         history.pushState(null, "", orderParams(["status", "action"], location.href));
     }
-}, 1000);
+}, 100);
 
 function orderParams(keys, url) {
     let rtn = url.split("?")[0], param,  params_arr = [],
