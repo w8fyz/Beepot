@@ -12,7 +12,6 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/utils/hand
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Beepot</title>
 </head>
-
 <?php
 require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/components/header.php";
 
@@ -20,7 +19,7 @@ include parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/po
 
 
 ?>
-
+<body onload="onBodyLoaded()">
 <div id="beep-full-container">
 
 
@@ -38,6 +37,5 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/cr
 
     <script src="./js/beepLoader.js"></script>
     <script src="./js/beepInteractions.js"></script>
-<body>
 </body>
 </html>

@@ -68,6 +68,17 @@ function getBasicUserInfo(id) {
         });
 }
 
+
+function getPageName() {
+    let url = window.location.pathname;
+    return url.substring(url.lastIndexOf('/') + 1);
+}
+function saveCache() {
+    if(getPageName() === "" || getPageName() === "index.php") {
+        localStorage.setItem("beeps", document.querySelector("#beep-full-container").innerHTML);
+    }
+}
+
 function getNumberOfInteraction(type, id) {
     fetch("endpoint/getInteraction.php?type="+type+"&target="+id, {
         method: "GET",

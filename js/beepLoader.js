@@ -20,6 +20,20 @@ window.addEventListener("load", (event) => {
     onAllContentLoaded();
 });
 
+function onBodyLoaded() {
+    console.log("body salut");
+    if(!localStorage.getItem("alreadyVisited")) {
+        setTimeout(function () {
+            localStorage.setItem("alreadyVisited", "1");
+            console.log("salut");
+            onAllContentLoaded();
+        }, 500);
+
+    } else {
+        console.log("Already set");
+    }
+}
+
 window.addEventListener("scroll", (event) => {
     let d = document.documentElement;
     let offset = d.scrollTop + window.innerHeight;
@@ -27,7 +41,7 @@ window.addEventListener("scroll", (event) => {
 
     if (offset === height) {
         getTimeline();
-        localStorage.setItem("beeps", document.querySelector("#beep-full-container").innerHTML);
+        saveCache();
     } else {
         let B = document.body;
         let D = document.documentElement;

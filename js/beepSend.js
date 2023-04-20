@@ -120,8 +120,10 @@ sendBeepButton.addEventListener("click", () => {
             if(data.startsWith('ID')) {
                 displayWarning("");
                 document.getElementById('newBeepClose').click();
+                let searchParams = new URLSearchParams(window.location.search);
+                searchParams.set("status", "beepSend");
+                window.location.search = searchParams.toString();
                 location.reload();
-
                 const id = data.split('-')[1];
                 conn.send(id);
 
