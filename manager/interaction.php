@@ -30,8 +30,9 @@ $getAllInteractions = function ($userID, $isRead) use ($bdd){
     if(!$isRead) {
         $addon = " AND isRead = 0";
     }
-    $request = $bdd->prepare("SELECT * FROM interaction WHERE idTarget = :idTarget".$addon);
+    $request = $bdd->prepare("SELECT * FROM interaction INNER JOIN post ON interaction.idTarget = post.id WHERE post.authorID = :idTarget".$addon);
     $request->execute(['idTarget' => $userID]);
+    return $request->fetchAll(PDO::FETCH_OBJ);
 };
 
 

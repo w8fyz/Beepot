@@ -46,6 +46,7 @@ window.addEventListener("scroll", (event) => {
         if (D.scrollTop == 0) {
             if (newAuthors.length >= 1) {
                 resetTimeline();
+                newAuthors.length = 0
             }
         }
     }

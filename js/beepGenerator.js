@@ -158,6 +158,5 @@ function generateBeep(beep, user, files, isBoosting, isLiking, likes, boosts, co
         </div>
     </div>
 `;
-    console.log("CALLED : "+beepHtml);
     beepContainer.insertAdjacentHTML("afterbegin", beepHtml);
 }

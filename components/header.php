@@ -36,9 +36,14 @@ require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/imports.php
             </div>
             <a href="notifications.php">
                 <i class="bi bi-bell">
+                    <?php
+                    require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/interaction.php";
+                    $interactions = $getAllInteractions($getUser()->id, false);
+                    if(sizeof($interactions) > 0) {?>
                       <span class="notification_pin badge rounded-pill bg-danger">
-    3
+    <?php echo sizeof($interactions); ?>
     <span class="visually-hidden">notifications</span>
+                          <?php }?>
                 </i>
 
             </a>
