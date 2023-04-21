@@ -20,11 +20,11 @@ function getForm($index, $error) {
     }
 
     switch ($index) {
+        case 3:
+            $password = htmlspecialchars($_POST['password'] ?? "");
         case 2:
             $email = htmlspecialchars($_POST['email'] ?? "");
             $username = htmlspecialchars($_POST['username'] ?? "");
-        case 3:
-            $password = htmlspecialchars($_POST['password']);
             break;
     }
 
