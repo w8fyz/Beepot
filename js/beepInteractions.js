@@ -65,18 +65,40 @@ function displayBoost(id, activated) {
     saveCache();
 }
 
+function findParent(toFind, element) {
+    let currentElement = element;
+    while (currentElement.parentNode) {
+        currentElement = currentElement.parentNode;
+        if (currentElement.id && currentElement.id.startsWith(toFind)) {
+            return currentElement;
+        }
+    }
+    return null;
+}
+
+function openBeepPopup() {
+    event.preventDefault();
+    let replyModal = document.querySelector(".defaultModal");
+    if(replyModal != null && replyModal.querySelector("form").length > 0) {
+        if(replyModal.querySelector(".temp_input") != null) {
+            replyModal.querySelector(".temp_input").remove();
+        }
+        replyModal.querySelector(".modal-title").textContent = "Nouveau Beep";
+        new bootstrap.Modal(replyModal).show();
+    }
+}
+
 function interactComment(id) {
     let beep = document.querySelector("#beep-"+id)
     if(findParent("noclick-beep", beep)) {
         let replyModal = document.querySelector(".defaultModal");
-        console.log(replyModal);
         if(replyModal != null && replyModal.querySelector("form").length > 0) {
-            replyModal.querySelector("form").innerHTML +=
-                "<div class='temp_input'><input hidden='hidden' name='idParent' value='"+id+"'></div>";
+            if(replyModal.querySelector(".temp_input") == null) {
+                replyModal.querySelector("form").insertAdjacentHTML("beforeend", "<div class='temp_input'><input hidden='hidden' name='idParent' value='" + id + "'></div>");
+            }
+            replyModal.querySelector(".modal-title").textContent = "Nouvelle réponse";
             new bootstrap.Modal(replyModal).show();
         }
-
-
     } else {
         window.location = "beep.php?id="+id+"&action=reply";
     }
