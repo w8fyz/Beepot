@@ -47,7 +47,7 @@ require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/imports.php
                 <div class="spinner-grow text-secondary" role="status">
                 </div>
 
-                <a href="" style="border-color: transparent !important;" onclick="" data-bs-toggle="modal" data-bs-target="#newBeepModal"><i style="color: #FF9B00;" class="bi bi-pencil-square"></i></a>
+                <a href="" style="border-color: transparent !important;" onclick="openBeepPopup()"><i style="color: #FF9B00;" class="bi bi-pencil-square"></i></a>
             </li>
         <?php }?>
     </ul>

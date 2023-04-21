@@ -79,6 +79,12 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/cr
         return imagesLoaded;
     }
 
+    document.querySelector("#beepContent").addEventListener('keydown', (event) => {
+        if(event.ctrlKey && event.key == "Enter") {
+            sendBeepButton.click();
+        }
+    });
+
     function resetTimeline() {
         window.scrollTo(0, 0);
         containerFull.innerHTML = "";

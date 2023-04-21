@@ -49,13 +49,13 @@ function orderParams(keys, url) {
     return rtn;
 }
 
-function findParent(toFind, element) {
-    let currentElement = element;
-    while (currentElement.parentNode) {
-        currentElement = currentElement.parentNode;
-        if (currentElement.id && currentElement.id.startsWith(toFind)) {
-            return currentElement;
+    function findParent(toFind, element) {
+        let currentElement = element;
+        while (currentElement.parentNode) {
+            currentElement = currentElement.parentNode;
+            if (currentElement.id && currentElement.id.startsWith(toFind)) {
+                return currentElement;
+            }
         }
+        return null;
     }
-    return null;
-}
