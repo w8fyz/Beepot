@@ -32,3 +32,4 @@
     </div>
 </div>
 <span>Déjà un compte ? <a href="login.php">Connecte toi maintenant !</a></span>
+</div>
