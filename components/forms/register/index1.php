@@ -9,7 +9,7 @@
                 <span class="input-group-text">@</span>
                 <div class="form-floating <?= needClass($error, 'utilisateur') ?>">
                     <input type="text" class="form-control <?= needClass($error, 'utilisateur') ?>" id="floatingInputGroup1" placeholder="Nom d\'utilisateur" name="username" value="<?= $username ?>">
-                    <label for="floatingInputGroup1">Nom d\'utilisateur</label>
+                    <label for="floatingInputGroup1">Nom d'utilisateur</label>
                 </div>
                 <div class="invalid-feedback">
                     <?= $error ?>

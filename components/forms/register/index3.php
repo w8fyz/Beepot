@@ -9,7 +9,7 @@
 
             <div class="form-floating mb-3">
                 <input type="text" name="username" readonly class="form-control-plaintext" id="floatingPlaintextInput" value="<?= $username ?>">
-                <label for="floatingPlaintextInput">Nom d\'utilisateur</label>
+                <label for="floatingPlaintextInput">Nom d'utilisateur</label>
             </div>
             <div class="form-floating mb-3">
                 <input type="email" name="email" readonly class="form-control-plaintext" id="floatingPlaintextInput" value="<?= $email ?>">
@@ -22,7 +22,7 @@
             <div class="form-check" style="text-align: left;">
                 <input class="form-check-input <?= needClass($error, 'conditions') ?>" type="checkbox" name="acceptTOS" id="flexCheckDefault">
                 <label class="form-check-label" for="flexCheckDefault">
-                    J\'accepte les <a href="#">conditions d\'utilisation de Beepot</a>
+                    J'accepte les <a href="#">conditions d'utilisation de Beepot</a>
                 </label>
             </div>
             <input type="hidden" name="step" value="4">
