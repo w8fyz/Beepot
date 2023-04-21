@@ -12,14 +12,14 @@ require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/imports.php
 <nav>
     <ul class="nav_up">
         <li>
-            <a href="" onclick="resetTimeline()" class="timeline_reset logo">
+            <a href="" onclick="headerToTimeline()" class="timeline_reset logo">
                 <img style="width: 60px" src="./assets/system/icon.svg"/>
             </a>
         </li>
         <li class="waitLoad">
             <div class="spinner-grow text-secondary" role="status">
             </div>
-            <a href="" onclick="resetTimeline()" class="timeline_reset">
+            <a href="" onclick="headerToTimeline()" class="timeline_reset">
                 <i class="bi bi-house"></i>
             </a>
         </li>
@@ -46,7 +46,8 @@ require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/imports.php
             <li class="waitLoad">
                 <div class="spinner-grow text-secondary" role="status">
                 </div>
-                <a href="" style="border-color: transparent !important;" data-bs-toggle="modal" data-bs-target="#newBeepModal"><i style="color: #FF9B00;" class="bi bi-pencil-square"></i></a>
+
+                <a href="" style="border-color: transparent !important;" onclick="" data-bs-toggle="modal" data-bs-target="#newBeepModal"><i style="color: #FF9B00;" class="bi bi-pencil-square"></i></a>
             </li>
         <?php }?>
     </ul>
@@ -77,7 +78,7 @@ require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/imports.php
         <?php }?>
     </ul>
 </nav>
-
+<script src="./js/headerManager.js"></script>
 <script>
 
     window.addEventListener("load", () => {

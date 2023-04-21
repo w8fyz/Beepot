@@ -9,11 +9,14 @@ if(isset($_GET['type']) && isset($_GET['target'])) {
     if(!$isLogged()){
         echo json_encode("false");
     }
-    $type = $_GET['type'];
-    $target = $_GET['target'];
+    $type = htmlspecialchars($_GET['type']);
+    $target = htmlspecialchars($_GET['target']);
 
     require $env['DOC_ROOT'].'/manager/interaction.php';
-
+    if($type === "COMMENT") {
+        $createInteraction($type, $target);
+        return;
+    }
     $haveInteract = $haveInteracted($type, $target);
 
     if($haveInteract) {

@@ -47,7 +47,6 @@ function interactBoost(id) {
         .catch((error) => {
             window.location = "register.php";
         });
-
 }
 
 function displayBoost(id, activated) {
@@ -67,11 +66,17 @@ function displayBoost(id, activated) {
 }
 
 function interactComment(id) {
-    console.log(id);
     let beep = document.querySelector("#beep-"+id)
     if(findParent("noclick-beep", beep)) {
-        let replyModal = document.querySelector("#replyModal");
-        new bootstrap.Modal(replyModal).show();
+        let replyModal = document.querySelector(".defaultModal");
+        console.log(replyModal);
+        if(replyModal != null && replyModal.querySelector("form").length > 0) {
+            replyModal.querySelector("form").innerHTML +=
+                "<div class='temp_input'><input hidden='hidden' name='idParent' value='"+id+"'></div>";
+            new bootstrap.Modal(replyModal).show();
+        }
+
+
     } else {
         window.location = "beep.php?id="+id+"&action=reply";
     }

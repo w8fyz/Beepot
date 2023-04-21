@@ -4,7 +4,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
 <script src="./js/bootstrap.bundle.js"></script>
 <script src="./js/beepClick.js"></script>
-<script src="./js/utils.js"></script>
 <script src="./js/ClientWebSocket.js"></script>
 <link rel='stylesheet' href='css/post.css'>
 <link rel="stylesheet" href="css/popup.css">

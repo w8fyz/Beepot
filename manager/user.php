@@ -14,6 +14,11 @@ $createUser = function($email, $password, $username) use ($bdd) {
     }
 };
 
+$logOut = function () use ($bdd) {
+    $_SESSION['user_id'] = null;
+    setcookie('remember_user', null, -1);
+};
+
 $isLogged = function () use ($bdd){
   if(isset($_SESSION['user_id'])) {
       $id = $_SESSION['user_id'];
@@ -29,11 +34,7 @@ $isLogged = function () use ($bdd){
   return false;
 };
 
-$logOut = function () use ($bdd) {
-  $_SESSION['user_id'] = null;
-  setcookie('remember_user', null, -1);
 
-};
 
 $setLogged = function ($id, $cookie) use ($bdd) {
   $_SESSION['user_id'] = $id;

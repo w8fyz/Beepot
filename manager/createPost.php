@@ -2,7 +2,7 @@
  if($_SERVER["REQUEST_METHOD"] != "POST") {
 ?>
 
-<div class="modal fade" id="newBeepModal" tabindex="-1" aria-labelledby="newBeepModalLabel" aria-hidden="true">
+<div class="modal fade defaultModal" id="newBeepModal" tabindex="-1" aria-labelledby="newBeepModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
@@ -26,7 +26,7 @@
             <div class="modal-footer">
                 <div style="width: auto;" class="input-group">
                     <input style="display: none" type="file" class="form-control" id="beepImages" name="beepImages" accept="image/*" multiple>
-                    <button style="border-radius: 20px;" class="btn btn-outline-secondary" type="button" id="addImageButton">+</button>
+                    <button style="border-radius: 20px;" class="btn btn-outline-secondary" id="addImageButton" type="button">+</button>
                 </div>
                 <button type="button" class="btn btn-warning" id="sendBeepButton">Envoyer</button>
             </div>
@@ -91,8 +91,11 @@
                 if(!isset($_POST['idParent'])) {
                    $beepId =  $createNewPost($beepContent);
                } else {
-                   $beepId =  $createNewReply($beepContent, htmlspecialchars($_POST['idParent']));
-               }
+                    $idParent = htmlspecialchars($_POST['idParent']);
+                   $beepId =  $createNewReply($beepContent, $idParent);
+                   include_once(parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/interaction.php");
+                    $createInteraction("COMMENT", $idParent);
+                }
 
                foreach ($beepImages as $filename) {
                    $createFile($beepId, $filename);

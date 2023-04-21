@@ -34,8 +34,8 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/cr
 
     <div class="popup" id="popup" onclick="popupClick()">
     </div>
-
     <script src="./js/beepLoader.js"></script>
     <script src="./js/beepInteractions.js"></script>
+    <script src="./js/utils.js"></script>
 </body>
 </html>

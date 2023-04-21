@@ -4,7 +4,7 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/utils/hand
 ?>
 
 <!doctype html>
-<html lang="fr">
+<html lang="fr" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -32,7 +32,7 @@ if(isset($_GET['id'])) {
     $id = htmlspecialchars($_GET['id']);
     $beep = $getBeep($id);
 
-    echo "</div><h1 class='response_title'>―――――――</h1>";
+    echo "</div><h1 style='pointer-events: none;' class='response_title'>―――――――</h1>";
 
     $getResponses($id);
 
@@ -42,11 +42,12 @@ if(isset($_GET['id'])) {
 echo "</div>";
 
 require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/utils/messages.php";
-
-require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/createReply.php";
-getReplyModal($id);
+require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/createPost.php";
 ?>
-
+    <script src="./js/beepInit.js"</script>
+    <script src="./js/beepSend.js"></script>
+    <script src="./js/beepInteractions.js"</script>
+    <script src="./js/utils.js"></script>
 <script>
 
     function back(){
@@ -78,22 +79,12 @@ getReplyModal($id);
         return imagesLoaded;
     }
 
-    const containerFull = document.getElementById("beep-full-container");
-
-    const observer = new MutationObserver(() => {
-        const loadedDivs = containerFull.querySelectorAll('.loaded-beep');
-        for (let i = 0; i < loadedDivs.length; i++) {
-            if (checkImagesLoaded(loadedDivs[i])) {
-                 onAllContentLoaded();
-            }
-        }
-    });
-
-    window.addEventListener("load", (event) => {
-        observer.observe(containerFull, { childList: true, subtree: true });
-        onAllContentLoaded();
-    });
+    function resetTimeline() {
+        window.scrollTo(0, 0);
+        containerFull.innerHTML = "";
+        getTimeline();
+    }
 </script>
-    <script src="./js/beepSend.js"></script>
+
     </body>
 </html>

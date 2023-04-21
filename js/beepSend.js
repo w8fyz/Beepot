@@ -84,11 +84,7 @@ beepContent.addEventListener("input", () => {
     charCount.textContent = beepContent.value.length;
 });
 
-beepContent.addEventListener('keydown', (event) => {
-    if(event.ctrlKey && event.key == "Enter") {
-        sendBeepButton.click();
-    }
-});
+
 
 const sendBeepButton = document.querySelector("#sendBeepButton");
 const newBeepForm = document.querySelector("#newBeepForm");
@@ -129,6 +125,7 @@ sendBeepButton.addEventListener("click", () => {
 
             } else {
                 displayWarning(data);
+                sendBeepButton.disabled = false;
             }
 
         })

@@ -2,19 +2,34 @@
 
 let url = new URL(location.href);
 
-setTimeout(function () {
-    if(url.searchParams.get("action") !== null) {
-        if(url.searchParams.get("action") === "reply") {
-            let replyModal = document.querySelector("#replyModal");
-            new bootstrap.Modal(replyModal).show();
-        }
+if(url.searchParams.get("action") !== null) {
+    console.log("CALLEEEEEEEEEEEEED")
+    if(url.searchParams.get("action") === "reply") {
+        let replyModal = document.querySelector("#replyModal");
+        new bootstrap.Modal(replyModal).show();
+    } else if(url.searchParams.get("action") === "resetTimeline") {
+        resetTimeline();
     }
+}
 
+window.addEventListener("shown.bs.modal", function (event) {
+    let replyModal = document.querySelector("#beepContent");
+    replyModal.focus();
+})
+
+setTimeout(function () {
     let parameters = location.href.split("?");
     if(parameters.length >= 2 && (parameters[1].includes("status=") || parameters[1].includes("action="))) {
-        history.pushState(null, "", orderParams(["status", "action"], location.href));
+        let url = orderParams(["status", "action"], location.href).split("/");
+        history.replaceState({}, document.title, url[url.length-1]);
     }
-}, 100);
+}, 10);
+
+document.querySelector("#beepContent").addEventListener('keydown', (event) => {
+    if(event.ctrlKey && event.key == "Enter") {
+        sendBeepButton.click();
+    }
+});
 
 function orderParams(keys, url) {
     let rtn = url.split("?")[0], param,  params_arr = [],
