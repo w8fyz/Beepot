@@ -18,16 +18,29 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/utils/hand
 require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/components/header.php";
 require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/interaction.php";
 require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/user.php";
+require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/post.php";
 
 if(!$isLogged()) {
     header("Location: login.php");
 }
 
+function sliceBeep($chaine) {
+    if (strlen($chaine) > 30) {
+        return substr($chaine, 0, 30) . "...";
+    } else {
+        return $chaine;
+    }
+}
+
 $interactions = $getAllInteractions($getUser()->id, false);
 foreach ($interactions as $interaction) {
-    $author = $getUserById($interaction->authorID);
+    $author = $getUserById($interaction->idAuthor);
+    $beep = $getBeepAsObject($interaction->idTarget);
+    $message = sliceBeep($beep->content);
 ?>
 <body>
+
+
 <div class="notification">
     <div class="card">
         <div class="card-body">
@@ -35,20 +48,22 @@ foreach ($interactions as $interaction) {
                 <img src="https://via.placeholder.com/50x50" class="rounded-circle me-3" width="50" height="50" alt="Photo de profil">
                 <div>
                     <h5 class="card-title mb-1"><?= $author->displayName ?></h5>
+                    <p class="card-text mb-0">
                     <?php
 
                     if($interaction->interactionType === "LIKE") {
-                        echo '<p class="card-text mb-0"><i style="color: #e74c3c;" class="bi bi-heart-fill"></i> A liké votre Beep</p>';
+                        echo '<i style="color: #e74c3c;" class="bi bi-heart-fill"></i> Like <div style="font-style: italic">"'.$message.'"</div>';
                     } else if($interaction->interactionType === "BOOST") {
-                        echo '<p class="card-text mb-0"><i style="color: rgb(255, 155, 0);" class="bi bi-rocket-takeoff-fill"></i> A boosté votre Beep</p>';
+                        echo '<i style="color: rgb(255, 155, 0);" class="bi bi-rocket-takeoff-fill"></i>  Boost <div style="font-style: italic">"'.$message.'"</div>';
                     } else if($interaction->interactionType === "COMMENT") {
-                        echo '<p class="card-text mb-0"><i style="color: #57c4a6;" class="bi bi-chat-left-fill"></i> A commenté votre Beep</p>';
+                        echo '<i style="color: #57c4a6;" class="bi bi-chat-left-fill"></i> A commenté votre Beep';
                     } else if($interaction->interactionType === "FOLLOW") {
-                        echo '<p class="card-text mb-0"><i class="bi bi-person-fill-add"></i> vous a suivis</p>';
+                        echo '<i class="bi bi-person-fill-add"></i> vous a suivis';
                     }
 
 
                     ?>
+                    </p>
                     <small class="text-muted"><?= $interaction->interactionTime ?></small>
                 </div>
             </div>
@@ -56,7 +71,13 @@ foreach ($interactions as $interaction) {
     </div>
 
 </div>
-<?php }?>
+
+
+<?php }
+
+$setAllInteractionAsRead($getUser()->id);
+
+?>
 
 </body>
 </html>

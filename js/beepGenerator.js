@@ -68,6 +68,7 @@ function getBasicUserInfo(id) {
         });
 }
 
+
 function saveCache() {
     if(getPageName() === "" || getPageName() === "index.php") {
         localStorage.setItem("beeps", document.querySelector("#beep-full-container").innerHTML);

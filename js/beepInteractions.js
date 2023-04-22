@@ -10,10 +10,14 @@ function interactLike(id) {
                 return;
             }
           displayLike(id, data);
+          if(getPageName() === "" || getPageName() === "index.php") {
+              localStorage.setItem("beeps", document.querySelector("#beep-full-container").innerHTML);
+          }
         })
         .catch((error) => {
             window.location = "register.php";
         });
+
 }
 
 function displayLike(id, activated) {
@@ -43,6 +47,9 @@ function interactBoost(id) {
                 return;
             }
             displayBoost(id, data);
+            if(getPageName() === "" || getPageName() === "index.php") {
+                localStorage.setItem("beeps", document.querySelector("#beep-full-container").innerHTML);
+            }
         })
         .catch((error) => {
             window.location = "register.php";
@@ -62,7 +69,6 @@ function displayBoost(id, activated) {
         ico.classList.add("bi-rocket-takeoff-fill");
         ico.classList.remove("bi-rocket-takeoff");
     }
-    saveCache();
 }
 
 function findParent(toFind, element) {

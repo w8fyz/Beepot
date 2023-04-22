@@ -127,6 +127,14 @@ function generateBeep($beep){
     <?php
 };
 
+$getBeepAsObject = function ($id) use ($bdd) {
+    $request = $bdd->prepare("SELECT *, TIMESTAMPDIFF(SECOND,'1970-01-01 00:00:00', creationDate) AS creationTimestamp  FROM post WHERE id = :id");
+    $request->execute(['id' => $id]);
+    if($request->rowCount()>0) {
+        return $request->fetch(PDO::FETCH_OBJ);
+    }
+};
+
 $getBeep = function ($id) use ($bdd) {
     $request = $bdd->prepare("SELECT *, TIMESTAMPDIFF(SECOND,'1970-01-01 00:00:00', creationDate) AS creationTimestamp  FROM post WHERE id = :id");
     $request->execute(['id' => $id]);
