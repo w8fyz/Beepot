@@ -1,13 +1,11 @@
 const beepContainer = document.querySelector("#beep-full-container");
 function getTimeline(){
-    console.log("START");
     let xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             let beeps = JSON.parse(this.responseText);
             for (let i = 0; i < beeps.length; i++) {
                 let beep = beeps[i];
-                console.log("BEEP : "+i);
 
                 let isBoosting = "";
                 let isLiking = "";
@@ -19,7 +17,6 @@ function getTimeline(){
                 }
 
                 let user = getBasicUserInfo(beep.authorID);
-                console.log(beep.authorID);
                 generateBeep(beep, user, getFiles(beep.id), isBoosting, isLiking, getNumberOfInteraction("LIKE", beep.id), getNumberOfInteraction("BOOST", beep.id), getNumberOfInteraction("COMMENT", beep.id));
             }
         }
@@ -58,7 +55,6 @@ function getBasicUserInfo(id) {
         .then((data) => {
 
             if(JSON.stringify(data).length > 5) {
-                console.log("D CALLED : "+JSON.stringify(data));
                 return JSON.parse(data);
             }
             return false;
@@ -116,7 +112,6 @@ function mediasHTML(medias) {
 
 
 function generateBeep(beep, user, files, isBoosting, isLiking, likes, boosts, comments) {
-    console.log(user);
     const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
     const dateFormatted = new Intl.DateTimeFormat('fr-FR', options).format(new Date(beep.creationDate));
     const beepHtml = `

@@ -17,16 +17,12 @@ window.addEventListener("load", (event) => {
 });
 
 function onBodyLoaded() {
-    console.log("body salut");
     if(!localStorage.getItem("alreadyVisited")) {
         setTimeout(function () {
             localStorage.setItem("alreadyVisited", "1");
-            console.log("salut");
             onAllContentLoaded();
         }, 500);
 
-    } else {
-        console.log("Already set");
     }
 }
 

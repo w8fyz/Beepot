@@ -55,10 +55,10 @@ function initformatBeep($id, $idAuthor, $displayName, $username, $content, $medi
         </div>
         <p class='card-text mt-3'>$content</p>
         <div class='d-flex mt-3'>
-            <div class='reduced-image-container d-flex flex-wrap align-items-center''>";
+            <div class='reduced-image-container d-flex flex-wrap align-items-center'>";
     if($medias != null) {
         foreach ($medias as $media) {
-            echo "<img src='assets/uploads/$media->fileName' class='img-fluid rounded m-1' alt='image 1'>";
+            echo "<img src='assets/uploads/$media->fileName' alt='image 1'>";
         }
     }
     echo "</div>
@@ -89,8 +89,53 @@ function initformatBeep($id, $idAuthor, $displayName, $username, $content, $medi
     </div>
 </div>
 ";
-}
+?>
+<div class='modal fade' id='imageModal' tabindex='-1' aria-labelledby='imageModalLabel' aria-hidden='true'>
+  <div class='modal-dialog modal-dialog-centered'>
+    <div class='modal-content'>
+      <div class='modal-body'>
+        <div id='imageCarousel' class='carousel slide' data-bs-ride='carousel'>
+          <div class='carousel-inner'>
+    <?php
+            if($medias != null) {
+                $active = true;
+                foreach ($medias as $media) {
+                    echo "<div class='carousel-item ".($active ? "active" : "")."'>
+                        <img src='assets/uploads/$media->fileName' class='d-block w-100' alt='image 1'>
+                      </div>";
+                    $active = false;
+                }
+            }
+            ?>
+          </div>
+          <button class='carousel-control-prev' type='button' data-bs-target='#imageCarousel' data-bs-slide='prev'>
+            <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+            <span class='visually-hidden'>Previous</span>
+          </button>
+          <button class='carousel-control-next' type='button' data-bs-target='#imageCarousel' data-bs-slide='next'>
+            <span class='carousel-control-next-icon' aria-hidden='true'></span>
+            <span class='visually-hidden'>Next</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    let exampleModal = document.getElementById('exampleModal')
+    exampleModal.addEventListener('show.bs.modal', function (event) {
+        let button = event.relatedTarget
+        let recipient = button.getAttribute('data-bs-whatever')
+        let modalTitle = exampleModal.querySelector('.modal-title')
+        let modalBodyInput = exampleModal.querySelector('.modal-body input')
 
+        modalTitle.textContent = 'New message to ' + recipient
+        modalBodyInput.value = recipient
+    })
+</script>
+
+<?php
+}
 function generateBeep($beep){
 
     require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/user.php";

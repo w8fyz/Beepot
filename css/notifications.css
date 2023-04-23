@@ -6,3 +6,18 @@
 .notification {
     margin-bottom: 6px;
 }
+
+.no_notification {
+    margin: 50px 50px 50px 20px;
+    width: 25rem;
+    text-align: center;
+}
+
+.no_notification h5 {
+    font-size: 30px;
+}
+
+.accordion {
+    margin: 50px 50px 50px 100px !important;
+    width: 30rem;
+}

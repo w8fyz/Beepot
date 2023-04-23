@@ -15,6 +15,7 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/utils/hand
     </head>
 
 <?php
+require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/utils/imports.php";
 require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/components/header.php";
 require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/interaction.php";
 require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/user.php";
@@ -75,9 +76,40 @@ foreach ($interactions as $interaction) {
 
 <?php }
 
+if(sizeof($interactions) == 0) {?>
+
+
+
+    <div class="no_notification">
+        <div class="card" style="">
+            <div class="card-body">
+                <img src="assets/system/no_notification.png" class="card-img-top">
+                <h5 class="card-title">Tout est calme ici...</h5>
+            </div>
+        </div>
+
+    </div>
+
+<?php }
+
 $setAllInteractionAsRead($getUser()->id);
 
 ?>
+
+<div class="accordion" id="accordionPanelsStayOpenExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                Accordion Item #1
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+            <div class="accordion-body">
+                <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

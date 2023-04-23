@@ -3,7 +3,6 @@
 let url = new URL(location.href);
 
 if(url.searchParams.get("action") !== null) {
-    console.log("CALLEEEEEEEEEEEEED")
     if(url.searchParams.get("action") === "reply") {
         let replyModal = document.querySelector("#replyModal");
         new bootstrap.Modal(replyModal).show();

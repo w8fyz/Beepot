@@ -4,7 +4,6 @@ function interactLike(id) {
     })
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
             if(data === "not_logged") {
                 window.location = "register.php";
                 return;
