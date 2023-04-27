@@ -9,6 +9,10 @@
     font-size: 15px;
 }
 
+
+.img-fluid rounded m-1 {
+    max-width: 150px !important;
+}
 .card-subtitle {
     font-size: 14px;
 }
@@ -18,7 +22,7 @@
 }
 
 .card-text img {
-    max-width: 150%;
+    max-width: 150px;
     width: 150%;
     height: auto;
     margin-right: 10px;

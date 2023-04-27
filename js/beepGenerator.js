@@ -104,7 +104,7 @@ function mediasHTML(medias) {
     let html = '';
     if (medias != null) {
         medias.forEach(media => {
-            html += `<img src='assets/uploads/${media.fileName}' class='img-fluid rounded m-1' alt='image 1'>`;
+            html += `<img style="max-width: 150px" src='assets/uploads/${media.fileName}' class='img-fluid rounded m-1' alt='image 1'>`;
         });
     }
     return `<div class='reduced-image-container d-flex flex-wrap align-items-center'>${html}</div>`;

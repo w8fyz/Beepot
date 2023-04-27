@@ -58,7 +58,7 @@ function initformatBeep($id, $idAuthor, $displayName, $username, $content, $medi
             <div class='reduced-image-container d-flex flex-wrap align-items-center'>";
     if($medias != null) {
         foreach ($medias as $media) {
-            echo "<img src='assets/uploads/$media->fileName' alt='image 1'>";
+            echo "<img style='max-width: 150px;' src='assets/uploads/$media->fileName' alt='image 1'>";
         }
     }
     echo "</div>
