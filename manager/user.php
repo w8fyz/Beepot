@@ -1,4 +1,6 @@
 <?php
+include_once(parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/handleErrors.php");
+
 include_once(parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/bdd.php");
 $bdd = initBDD();
 if(session_status() != 2) {
@@ -40,10 +42,8 @@ $setLogged = function ($id, $cookie) use ($bdd) {
   $_SESSION['user_id'] = $id;
   if($cookie) {
       $key = parse_ini_file(dirname(__DIR__).'/.env')['SHA_KEY'];
-      $value = id.':'.time();
-      $hash = hash_hmac('sha256', $value, $key);
-      $value = $value.':'.$hash;
-      setcookie('remember_user', $value, time() + 2592000);
+      $hash = hash_hmac('sha256', $id, $key);
+      setcookie('remember_user', $hash, time() + 2592000);
   }
 };
 
@@ -66,11 +66,10 @@ $getUserById = function ($id) use ($bdd) {
 if(!function_exists('refreshSessionByCookie')) {
     function refreshSessionByCookie()
     {
-        var_dump($_COOKIE);
         if (isset($_COOKIE['remember_user'])) {
             $cookie = $_COOKIE['remember_user'];
             $key = parse_ini_file(dirname(__DIR__) . '/.env')['SHA_KEY'];
-            $parts = explode(':', $cookie);
+/*            $parts = explode(':', $cookie);
             $hash = array_pop($parts);
             $value = implode(':', $parts);
             $expected_hash = hash_hmac('sha256', $value, $key);
@@ -78,17 +77,26 @@ if(!function_exists('refreshSessionByCookie')) {
                 list($user_id, $timestamp) = explode(':', $value);
                 if (time() - $timestamp <= 2592000) {
                     $_SESSION['user_id'] = $user_id;
+                    return $user_id;
                 }
+            }*/
+            $expected_hash = hash_hmac('sha256', $cookie, $key);
+            if ($hash === $expected_hash) {
+
             }
         }
     }
 }
 
 $getUser = function () use ($bdd) {
+    $id = "";
+    echo "AAAA";
     if(!isset($_SESSION['user_id'])) {
-       refreshSessionByCookie();
+       $id = refreshSessionByCookie();
+    } else {
+        $id = $_SESSION['user_id'];
     }
-    $id = $_SESSION['user_id'];
+    var_dump($id);
     $request = $bdd->prepare("SELECT * FROM user WHERE id = :id");
     $request->execute(['id' => $id]);
     return $request->fetch(PDO::FETCH_OBJ);
