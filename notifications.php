@@ -44,7 +44,10 @@ foreach ($interactions as $interaction) {
 
 <div class="notification">
     <div class="card">
-        <div class="card-body">
+        <div class="card-body" onclick='function goToBeep() {
+            window.location = "beep.php?id=<?= $beep->id?>";
+        }
+        goToBeep()'>
             <div class="d-flex">
                 <img src="https://via.placeholder.com/50x50" class="rounded-circle me-3" width="50" height="50" alt="Photo de profil">
                 <div>
@@ -93,8 +96,14 @@ if(sizeof($interactions) == 0) {?>
 <?php }
 
 $setAllInteractionAsRead($getUser()->id);
+require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/utils/messages.php";
 
+require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/createPost.php";
 ?>
-
+<div class="popup" id="popup" onclick="popupClick()">
+</div>
+<script src="./js/beepLoader.js"></script>
+<script src="./js/beepInteractions.js"></script>
+<script src="./js/utils.js"></script>
 </body>
 </html>

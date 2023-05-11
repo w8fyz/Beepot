@@ -23,13 +23,6 @@ require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/imports.php
                 <i class="bi bi-house"></i>
             </a>
         </li>
-        <li class="waitLoad">
-            <div class="spinner-grow text-secondary" role="status">
-            </div>
-            <a href="search.php">
-                <i class="bi bi-search"></i>
-            </a>
-        </li>
         <?php if($isLogged()) { ?>
         <li class="waitLoad">
             <div class="spinner-grow text-secondary" role="status">
@@ -63,13 +56,6 @@ require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/imports.php
             </div>
             <a href="<?php if($isLogged()) { echo 'profil.php'; } else { echo 'login.php'; }?> ">
                 <i class="bi bi-person"></i>
-            </a>
-        </li>
-        <li class="waitLoad">
-            <div class="spinner-grow text-secondary" role="status">
-            </div>
-            <a href="settings.php">
-                <i class="bi bi-gear"></i>
             </a>
         </li>
         <?php if($isLogged()) { ?>
