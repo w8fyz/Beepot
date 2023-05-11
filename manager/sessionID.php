@@ -4,7 +4,7 @@ $bdd = initBDD();
 
 $getUserIDByHash = function($hash) use ($bdd) {
     try {
-        $request = $bdd->prepare("SELECT idUser FROM remember_me WHERE hash = :hash");
+        $request = $bdd->prepare("SELECT idUser FROM sessionID WHERE hash = :hash");
         $request->execute(['hash' => $hash]);
         return $request->fetch(PDO::FETCH_OBJ);
     }catch (Exception $e) {
