@@ -117,7 +117,7 @@ function generateBeep(beep, user, files, isBoosting, isLiking, likes, boosts, co
     const beepHtml = `
     <div id="beep-${beep.id}" data-author="${user.id}" class="loaded-beep card mb-3" onmousedown="clickPost(event)">
         <div class="card-body">
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center goToUser">
                 <img src="https://via.placeholder.com/50x50" class="rounded-circle me-3 skipClickPost" alt="avatar">
                 <div>
                     <h5 class="card-title mb-0 skipClickPost">${user.displayName}</h5>

@@ -54,7 +54,7 @@ require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/imports.php
         <li class="waitLoad">
             <div class="spinner-grow text-secondary" role="status">
             </div>
-            <a href="<?php if($isLogged()) { echo 'profil.php'; } else { echo 'login.php'; }?> ">
+            <a href="<?php if($isLogged()) { echo 'profil.php?id='.$getUser()->id; } else { echo 'login.php'; }?> ">
                 <i class="bi bi-person"></i>
             </a>
         </li>
