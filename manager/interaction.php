@@ -45,11 +45,13 @@ $setAllInteractionAsRead = function ($userID) use ($bdd){
 
 $getInteractionsFromPostByType = function ($type, $idPost) use ($bdd){
         require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/user.php";
-        $request = $bdd->prepare("SELECT * FROM interaction WHERE idTarget = :idPost AND interactionType = :interactionType");
+        $request = $bdd->prepare("
+        SELECT * FROM interaction 
+        WHERE idTarget = :idPost AND interactionType = :interactionType");
         $request->execute(['idPost' => $idPost, 'interactionType' => $type]);
         $nb = $request->rowCount();
         if($nb == null) {
             $nb = 0;
         }
         return $nb;
-    };
+};

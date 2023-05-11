@@ -10,5 +10,6 @@ if(isset($_GET['type']) && isset($_GET['target'])) {
     $target = htmlspecialchars($_GET['target']);
     echo json_encode($getInteractionsFromPostByType($_GET['type'], $_GET['target']));
 }
-
 ?>
+
+

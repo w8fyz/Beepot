@@ -1,6 +1,6 @@
 <?php
 include_once(parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/handleErrors.php");
-
+include_once(parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/sessionID.php");
 include_once(parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/bdd.php");
 $bdd = initBDD();
 if(session_status() != 2) {
@@ -22,7 +22,12 @@ $logOut = function () use ($bdd) {
 };
 
 $isLogged = function () use ($bdd){
-  if(isset($_SESSION['user_id'])) {
+    $id = "";
+    if(isset($_SESSION['user_id'])) {
+        $id = $_SESSION['used_id'];
+    } else{
+        $id = refreshSessionByCookie();
+    }
       $id = $_SESSION['user_id'];
       $request = $bdd->prepare("SELECT * FROM user WHERE id = :id");
       $request->execute(['id' => $id]);
@@ -32,7 +37,6 @@ $isLogged = function () use ($bdd){
           $logOut();
           return false;
       }
-  }
   return false;
 };
 
@@ -42,8 +46,10 @@ $setLogged = function ($id, $cookie) use ($bdd) {
   $_SESSION['user_id'] = $id;
   if($cookie) {
       $key = parse_ini_file(dirname(__DIR__).'/.env')['SHA_KEY'];
-      $hash = hash_hmac('sha256', $id, $key);
-      setcookie('remember_user', $hash, time() + 2592000);
+      $uuid = random_bytes(32);
+      $ip = getIp();
+      $createUserHash($uuid, $ip);      $hash = hash_hmac('sha256', $id, $key);
+      setcookie('remember_user', $uuid, time() + 2592000);
   }
 };
 
@@ -68,29 +74,25 @@ if(!function_exists('refreshSessionByCookie')) {
     {
         if (isset($_COOKIE['remember_user'])) {
             $cookie = $_COOKIE['remember_user'];
-            $key = parse_ini_file(dirname(__DIR__) . '/.env')['SHA_KEY'];
-/*            $parts = explode(':', $cookie);
-            $hash = array_pop($parts);
-            $value = implode(':', $parts);
-            $expected_hash = hash_hmac('sha256', $value, $key);
-            if ($hash === $expected_hash) {
-                list($user_id, $timestamp) = explode(':', $value);
-                if (time() - $timestamp <= 2592000) {
-                    $_SESSION['user_id'] = $user_id;
-                    return $user_id;
-                }
-            }*/
-            $expected_hash = hash_hmac('sha256', $cookie, $key);
-            if ($hash === $expected_hash) {
-
+            $userID = $getUserIDByHash($cookie, getIp());
+            if($userID != null) {
+                $_SESSION['user_id'] = $userID;
+                return $userID;
             }
         }
     }
 }
+if(!function_exists('getIp')) {
+    function getIp() {
+        return $_SERVER['HTTP_CLIENT_IP']
+            ? $_SERVER['HTTP_CLIENT_IP']
+            : ($_SERVER['HTTP_X_FORWARDED_FOR']
+                ? $_SERVER['HTTP_X_FORWARDED_FOR']
+                : $_SERVER['REMOTE_ADDR']);
+    }
+}
 
 $getUser = function () use ($bdd) {
-    $id = "";
-    echo "AAAA";
     if(!isset($_SESSION['user_id'])) {
        $id = refreshSessionByCookie();
     } else {
