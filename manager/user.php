@@ -1,6 +1,5 @@
 <?php
 include_once(parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/handleErrors.php");
-include_once(parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/sessionID.php");
 include_once(parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/utils/bdd.php");
 $bdd = initBDD();
 if(session_status() != 2) {
@@ -24,17 +23,18 @@ $logOut = function () use ($bdd) {
 $isLogged = function () use ($bdd){
     $id = "";
     if(isset($_SESSION['user_id'])) {
-        $id = $_SESSION['used_id'];
+        $id = $_SESSION['user_id'];
     } else{
         $id = refreshSessionByCookie();
     }
-      $id = $_SESSION['user_id'];
+    if($id == null) {
+        return false;
+    }
       $request = $bdd->prepare("SELECT * FROM user WHERE id = :id");
       $request->execute(['id' => $id]);
       if($request->rowCount()>0) {
           return true;
       } else {
-          $logOut();
           return false;
       }
   return false;
@@ -45,10 +45,11 @@ $isLogged = function () use ($bdd){
 $setLogged = function ($id, $cookie) use ($bdd) {
   $_SESSION['user_id'] = $id;
   if($cookie) {
+      include_once(parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/sessionID.php");
       $key = parse_ini_file(dirname(__DIR__).'/.env')['SHA_KEY'];
-      $uuid = random_bytes(32);
+      $uuid = getUUID();
       $ip = getIp();
-      $createUserHash($uuid, $ip);      $hash = hash_hmac('sha256', $id, $key);
+      $createUserHash($id, $uuid, $ip);
       setcookie('remember_user', $uuid, time() + 2592000);
   }
 };
@@ -74,31 +75,47 @@ if(!function_exists('refreshSessionByCookie')) {
     {
         if (isset($_COOKIE['remember_user'])) {
             $cookie = $_COOKIE['remember_user'];
+            include_once(parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/sessionID.php");
             $userID = $getUserIDByHash($cookie, getIp());
             if($userID != null) {
-                $_SESSION['user_id'] = $userID;
-                return $userID;
+                $_SESSION['user_id'] = $userID->idUser;
+                return $userID->idUser;
+            } else {
+                return null;
             }
         }
     }
 }
+if(!function_exists('getUUID')) {
+    function getUUID($data = null) {
+        // Generate 16 bytes (128 bits) of random data or use the data passed into the function.
+        $data = $data ?? random_bytes(16);
+        assert(strlen($data) == 16);
+
+        // Set version to 0100
+        $data[6] = chr(ord($data[6]) & 0x0f | 0x40);
+        // Set bits 6-7 to 10
+        $data[8] = chr(ord($data[8]) & 0x3f | 0x80);
+
+        // Output the 36 character UUID.
+        return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
+    }
+}
 if(!function_exists('getIp')) {
     function getIp() {
-        return $_SERVER['HTTP_CLIENT_IP']
-            ? $_SERVER['HTTP_CLIENT_IP']
-            : ($_SERVER['HTTP_X_FORWARDED_FOR']
-                ? $_SERVER['HTTP_X_FORWARDED_FOR']
-                : $_SERVER['REMOTE_ADDR']);
+        return $_SERVER['HTTP_CLIENT_IP'] ?? ($_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR']);
     }
 }
 
 $getUser = function () use ($bdd) {
     if(!isset($_SESSION['user_id'])) {
        $id = refreshSessionByCookie();
+       if($id == null) {
+           return null;
+       }
     } else {
         $id = $_SESSION['user_id'];
     }
-    var_dump($id);
     $request = $bdd->prepare("SELECT * FROM user WHERE id = :id");
     $request->execute(['id' => $id]);
     return $request->fetch(PDO::FETCH_OBJ);

@@ -9,7 +9,7 @@ $getUserIDByHash = function($uuid, $ipAdress) use ($bdd) {
         $request = $bdd->prepare("SELECT idUser FROM sessionID 
               WHERE uuid = :uuid AND ipHash = :ipHash");
         $request->execute(['uuid' => $uuid, 'ipHash' => $ipHash]);
-        return $request->fetch(PDO::FETCH_OBJ)->idUser;
+        return $request->fetch(PDO::FETCH_OBJ);
     }catch (Exception $e) {
         return null;
     }
