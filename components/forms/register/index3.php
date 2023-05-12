@@ -26,7 +26,7 @@
                 </label>
             </div>
             <input type="hidden" name="step" value="4">
-            <button class="btn btn-lg btn-primary btn-block mt-4" type="submit">Valider</button>
+            <button class="btn btn-lg btn-warning btn-block mt-4" type="submit">Valider</button>
         </form>
         <p>Etape 3/3</p>
     </div>

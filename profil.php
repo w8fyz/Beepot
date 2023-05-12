@@ -5,7 +5,6 @@ if(!isset($_GET['id'])) {
 }
 
 $user = $getUserById(htmlspecialchars($_GET['id']));
-
 if($user == null) {
     header("Location: index.php");
 }
@@ -37,15 +36,15 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/po
 
 <div class="container">
     <div>
-        <img src="assets" alt="Profile Banner" class="profile-banner profile-corner">
+        <img src="assets/uploads/<?=$user->profile_banner?>" alt="Profile Banner" class="profile-banner profile-corner">
         <div>
 
-            <img src="assets/uploads/" alt="Profile Picture" class="profile-picture">
+            <img src="assets/uploads/<?=$user->profile_picture?>" alt="Profile Picture" class="profile-picture">
         </div>
 
         <div class="profile-username profile-corner">
-            <h2>Nom d'utilisateur</h2>
-            <p>@Utilisateur</p>
+            <h2><?=$user->displayName?></h2>
+            <p>@<?=$user->username?></p>
         </div>
 
         <div class="profile-details">
@@ -77,10 +76,12 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/po
     </div>
 
 
-
 </div>
 
 <?php
+
+$getBeepsFrom($user->id);
+
 require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/utils/messages.php";
 
 require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/createPost.php";

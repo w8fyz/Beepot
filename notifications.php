@@ -49,7 +49,7 @@ foreach ($interactions as $interaction) {
         }
         goToBeep()'>
             <div class="d-flex">
-                <img src="https://via.placeholder.com/50x50" class="rounded-circle me-3" width="50" height="50" alt="Photo de profil">
+                <img src="assets/uploads/<?=$author->profile_banner?>" class="rounded-circle me-3" width="50" height="50" alt="Photo de profil">
                 <div>
                     <h5 class="card-title mb-1"><?= $author->displayName ?></h5>
                     <p class="card-text mb-0">

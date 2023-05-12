@@ -58,14 +58,14 @@ function getForm($error) {
   </div>
 </div>
 <div class="form-check" style="text-align: left;">
-  <input class="form-check-input" type="checkbox" name="rememberMe" id="flexCheckDefault" checked>
+  <input class="form-check-input" style="background-color: orange;" type="checkbox" name="rememberMe" id="flexCheckDefault" checked>
   <label class="form-check-label" for="flexCheckDefault">
     Se souvenir de moi
   </label>
 </div>
-              <button class="btn btn-lg btn-primary btn-block mt-4" type="submit">Connexion</button>
+              <button class="btn btn-lg btn-warning btn-block mt-4" type="submit">Connexion</button>
             </form>
-                          <span>Pas encore de compte ? <a href="register.php">Inscrit toi maintenant !</a></span>
+                          <span>Pas encore de compte ? <a style="color: orange;" href="register.php">Inscrit toi maintenant !</a></span>
           </div>
         </div>
       </div>';

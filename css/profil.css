@@ -4,6 +4,7 @@
     object-fit: cover;
     margin-top: 0px !important;
     margin-bottom: -100px;
+    border-radius: 50%;
 }
 
 .profile-corner {

@@ -29,7 +29,7 @@
             <input type="hidden" name="email" value="<?= $email ?>">
             <input type="hidden" name="username" value="<?= $username ?>">
             <input type="hidden" name="step" value="3">
-            <button class="btn btn-lg btn-primary btn-block mt-4" type="submit">Continuer</button>
+            <button class="btn btn-lg btn-warning btn-block mt-4" type="submit">Continuer</button>
         </form>
         <p>Etape 2/3</p>
     </div>

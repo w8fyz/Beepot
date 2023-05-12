@@ -40,14 +40,14 @@ function initloadBeep($addImg) {
     </div>
 </div>";
 }
-function initformatBeep($id, $idAuthor, $displayName, $username, $content, $medias = null, $date, $likes, $boost, $comments, $isLiked, $isBoosted) {
+function initformatBeep($id, $idAuthor, $profile_picture, $displayName, $username, $content, $medias = null, $date, $likes, $boost, $comments, $isLiked, $isBoosted) {
 
     $dateFormated = date( 'd/m/Y H:i:s',$date);
 
     echo "<div id='beep-$id' data-author='$idAuthor' class='loaded-beep card mb-3' onmousedown='clickPost(event)'>
     <div class='card-body'>
-        <div class='d-flex align-items-center'>
-            <img src='https://via.placeholder.com/50x50' class='rounded-circle me-3 skipClickPost' alt='avatar'>
+        <div class='d-flex align-items-center' onmousedown='goToUser(event, $idAuthor)'>
+            <img src='assets/uploads/$profile_picture' class='rounded-circle me-3 skipClickPost' alt='avatar' style='max-width: 50px;'>
             <div>
                 <h5 class='card-title mb-0 skipClickPost'>$displayName</h5>
                 <p class='card-subtitle text-muted skipClickPost'>@$username</p>
@@ -167,7 +167,7 @@ function generateBeep($beep){
     ?>
         <div class='beep-box'>
             <?=initloadBeep(false)?>
-            <?=initformatBeep($beep->id, $author->id, $author->displayName, $author->username, $content, $files, $creationDate,$nbLikes, $nbBoosts, $nbComments, $isLiked, $isBoosted)?>
+            <?=initformatBeep($beep->id, $author->id, $author->profile_picture, $author->displayName, $author->username, $content, $files, $creationDate,$nbLikes, $nbBoosts, $nbComments, $isLiked, $isBoosted)?>
         </div>
     <?php
 };
@@ -205,6 +205,19 @@ $getTimeline = function ($lastID = PHP_INT_MAX) use ($bdd){
 
 };
 
+$getBeepsFrom = function ($id) use ($bdd){
+    $request = $bdd->prepare("SELECT *, TIMESTAMPDIFF(SECOND,'1970-01-01 00:00:00', creationDate) AS creationTimestamp FROM post WHERE authorID = :id AND idParent IS NULL LIMIT 10");
+    $request->execute(['id' => $id]);
+    $match = [];
+    if($request->rowCount()>0) {
+        foreach ($request->fetchAll(PDO::FETCH_OBJ) as $beep) {
+            generateBeep($beep);
+            $match[] = $beep;
+        }
+    }
+    return $match;
+};
+
 $getResponses = function ($id) use ($bdd){
     //$request = $bdd->prepare("SELECT *, TIMESTAMPDIFF(SECOND,'1970-01-01 00:00:00', creationDate) AS creationTimestamp FROM post WHERE id > :id ORDER BY creationTimestamp DESC LIMIT 10");
     $request = $bdd->prepare("SELECT *, TIMESTAMPDIFF(SECOND,'1970-01-01 00:00:00', creationDate) AS creationTimestamp FROM post WHERE idParent = :id");
@@ -217,7 +230,6 @@ $getResponses = function ($id) use ($bdd){
         }
     }
     return $match;
-
 };
 
 $createNewPost = function($content) use ($bdd) {

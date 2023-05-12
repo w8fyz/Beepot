@@ -26,10 +26,10 @@
                 </div>
             </div>
             <input type="hidden" name="step" value="2">
-            <button class="btn btn-lg btn-primary btn-block mt-4" type="submit">Continuer</button>
+            <button class="btn btn-lg btn-warning btn-block mt-4" type="submit">Continuer</button>
         </form>
         <p>Etape 1/3</p>
     </div>
 </div>
-<span>Déjà un compte ? <a href="login.php">Connecte toi maintenant !</a></span>
+<span>Déjà un compte ? <a style="color: orange;" href="login.php">Connecte toi maintenant !</a></span>
 </div>
