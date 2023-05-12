@@ -78,8 +78,12 @@ $date = date('d/m/Y H:i:s', $user->creationTimestamp);
         </div>
 
     </div>
-
-
+    <?php if($isLogged() && $getUser()->id == $user->id) {?>
+    <button style="margin-left: 10px; margin-bottom: 20px" type="button" class="btn btn-warning" data-toggle="modal" data-target="#editProfile"
+            onclick="openEditProfile()">
+        Modifier
+    </button>
+<?php }?>
 </div>
 <div id="beep-full-container">
 <?php
@@ -95,5 +99,50 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/cr
 <script src="./js/beepLoader.js"></script>
 <script src="./js/beepInteractions.js"></script>
 <script src="./js/utils.js"></script>
-</body>
+<script>
+
+    function openEditProfile() {
+        let editModal = document.querySelector("#editProfile");
+        new bootstrap.Modal(editModal).show();
+    }
+
+    function closeEditProfile() {
+        let editModal = document.querySelector("#editProfile");
+        new bootstrap.Modal(editModal).hide();
+    }
+</script>
+
+<div class="modal fade" id="editProfile" tabindex="-1" role="dialog" aria-labelledby="editProfileLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfileLabel">Modifier le profil</h5>
+                <button onclick="closeEditProfile()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="endpoint/editProfile.php" method="post">
+                <div class="modal-body">
+
+
+                    <!-- Nom -->
+                    <div class="form-group">
+                        <label for="nameInput">Nom</label>
+                        <input type="text" class="form-control" id="nameInput" name="name" value=<?= $user->displayName ?>>
+                    </div>
+
+                    <!-- Bio -->
+                    <div class="form-group">
+                        <label for="bioInput">Bio</label>
+                        <textarea class="form-control" id="bioInput" rows="3" name="bio"><?= $user->bio ?></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-warning">Enregistrer</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeEditProfile()">Fermer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div></body>
 </html>

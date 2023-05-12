@@ -107,6 +107,22 @@ if(!function_exists('getIp')) {
     }
 }
 
+$updateUser = function ($id, $displayName, $bio, $pp, $banner) use ($bdd) {
+    $fields = ['displayName' => $displayName, 'bio' => $bio, 'id' => $id];
+    $doIaddbanner = "";
+    if($banner != null) {
+        $doIaddbanner = ", profile_banner = :banner";
+        $fields['banner'] = $banner;
+    }
+    $doIaddpp = "";
+    if($pp != null) {
+        $doIaddpp = ", profile_picture = :pp";
+        $fields['pp'] = $pp;
+    }
+    $request = $bdd->prepare("UPDATE user SET displayName = :displayName, bio = :bio".$doIaddbanner.$doIaddpp." WHERE id = :id");
+    $request->execute($fields);
+};
+
 $getUser = function () use ($bdd) {
     if(!isset($_SESSION['user_id'])) {
        $id = refreshSessionByCookie();
