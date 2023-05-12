@@ -10,6 +10,15 @@ $haveInteracted = function ($type, $target) use ($bdd){
     return $request->rowCount()>0;
 };
 
+$countPostFor = function ($target) use ($bdd) {
+    require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/user.php";
+    $request = $bdd->prepare("    SELECT COUNT(*) AS nbPosts
+FROM post
+WHERE authorID = :idAuthor");
+    $request->execute(['idAuthor' => $target]);
+    return $request->fetch(PDO::FETCH_OBJ)->nbPosts;
+};
+
 $createInteraction = function ($type, $target) use ($bdd){
     require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/user.php";
     $author = $getUser();
@@ -33,6 +42,13 @@ $getAllInteractions = function ($userID, $isRead) use ($bdd){
     $request = $bdd->prepare("SELECT * FROM interaction INNER JOIN post ON interaction.idTarget = post.id WHERE post.authorID = :idTarget".$addon." ORDER BY interactionTime DESC");
     $request->execute(['idTarget' => $userID]);
     return $request->fetchAll(PDO::FETCH_OBJ);
+};
+
+$getCountInteractionByType = function ($userID, $type) use ($bdd){
+    require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/user.php";
+    $request = $bdd->prepare("SELECT COUNT(*) AS nbInteract FROM interaction INNER JOIN post ON interaction.idTarget = post.id WHERE post.authorID = :idTarget");
+    $request->execute(['idTarget' => $userID]);
+    return $request->fetch(PDO::FETCH_OBJ)->nbInteract;
 };
 
 $setAllInteractionAsRead = function ($userID) use ($bdd){

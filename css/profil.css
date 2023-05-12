@@ -4,11 +4,15 @@
     object-fit: cover;
     margin-top: 0px !important;
     margin-bottom: -100px;
-    border-radius: 50%;
+    width: 915px;
 }
 
 .profile-corner {
     margin-top: -100px;
+}
+
+.container {
+    margin-left: 78px !important
 }
 
 .profile-picture {

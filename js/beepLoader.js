@@ -3,14 +3,15 @@ function popupClick() {
     window.scrollTo(0, 0);
 }
 
-
+let pathname = location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
+if(pathname == "index.php" || pathname == "") {
 if(localStorage.getItem("beeps") != null) {
     document.querySelector("#beep-full-container").insertAdjacentHTML("beforeend",
         localStorage.getItem("beeps"));
 } else {
     getTimeline();
 }
-
+}
 window.addEventListener("load", (event) => {
     observer.observe(containerFull, {childList: true, subtree: true});
     onAllContentLoaded();
@@ -30,10 +31,11 @@ window.addEventListener("scroll", (event) => {
     let d = document.documentElement;
     let offset = d.scrollTop + window.innerHeight;
     let height = d.offsetHeight;
-
-    if (offset === height) {
+    if (offset >= height) {
         getTimeline();
-        saveCache();
+        try {
+            saveCache();
+        } catch (e) {}
     } else {
         let B = document.body;
         let D = document.documentElement;
@@ -135,7 +137,14 @@ function getTimeline(){
         if(beeps.length > 0) {
             usableID = beeps[beeps.length - 1].id.split("-")[1];
         }
-        xmlhttp.open("GET", "endpoint/getTimeline.php?lastID=" + usableID, true);
+        if(pathname.includes("profil.php")) {
+            let params = new URLSearchParams(window.location.href.search);
+            let id = params.get('id');
+            xmlhttp.open("GET", "endpoint/getBeepFrom.php?lastID=" + usableID+"&id="+id, true);
+        } else {
+            xmlhttp.open("GET", "endpoint/getTimeline.php?lastID=" + usableID, true);
+        }
+
         xmlhttp.send();
 
 }

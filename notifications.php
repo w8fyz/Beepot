@@ -86,7 +86,7 @@ if(sizeof($interactions) == 0) {?>
     <div class="no_notification">
         <div class="card" style="">
             <div class="card-body">
-                <img src="assets/system/no_notification.png" class="card-img-top">
+                <img src="assets/system/no_notification.svg" class="card-img-top">
                 <h5 class="card-title">Tout est calme ici...</h5>
             </div>
         </div>

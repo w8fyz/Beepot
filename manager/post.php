@@ -121,18 +121,6 @@ function initformatBeep($id, $idAuthor, $profile_picture, $displayName, $usernam
     </div>
   </div>
 </div>
-<script>
-    let exampleModal = document.getElementById('exampleModal')
-    exampleModal.addEventListener('show.bs.modal', function (event) {
-        let button = event.relatedTarget
-        let recipient = button.getAttribute('data-bs-whatever')
-        let modalTitle = exampleModal.querySelector('.modal-title')
-        let modalBodyInput = exampleModal.querySelector('.modal-body input')
-
-        modalTitle.textContent = 'New message to ' + recipient
-        modalBodyInput.value = recipient
-    })
-</script>
 
 <?php
 }
@@ -142,7 +130,6 @@ function generateBeep($beep){
     require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/files.php";
     require parse_ini_file(dirname(__DIR__).'/.env')['DOC_ROOT']."/manager/interaction.php";
     $creationDate = $beep->creationTimestamp;
-
     $author = $getUserById($beep->authorID);
     $content = $beep->content;
 
@@ -205,9 +192,10 @@ $getTimeline = function ($lastID = PHP_INT_MAX) use ($bdd){
 
 };
 
-$getBeepsFrom = function ($id) use ($bdd){
-    $request = $bdd->prepare("SELECT *, TIMESTAMPDIFF(SECOND,'1970-01-01 00:00:00', creationDate) AS creationTimestamp FROM post WHERE authorID = :id AND idParent IS NULL LIMIT 10");
-    $request->execute(['id' => $id]);
+$getBeepsFrom = function ($authorID, $id = PHP_INT_MAX) use ($bdd){
+    $request = $bdd->prepare("SELECT *, TIMESTAMPDIFF(SECOND,'1970-01-01 00:00:00', creationDate) 
+    AS creationTimestamp FROM post WHERE authorID = :authorID AND idParent IS NULL AND id < :id ORDER BY id DESC LIMIT 30");
+    $request->execute(['id' => $id, 'authorID' => $authorID]);
     $match = [];
     if($request->rowCount()>0) {
         foreach ($request->fetchAll(PDO::FETCH_OBJ) as $beep) {

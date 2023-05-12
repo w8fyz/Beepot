@@ -65,7 +65,7 @@ $getExactUser = function ($email) use ($bdd) {
 };
 
 $getUserById = function ($id) use ($bdd) {
-    $request = $bdd->prepare("SELECT * FROM user WHERE id = :id");
+    $request = $bdd->prepare("SELECT *, TIMESTAMPDIFF(SECOND,'1970-01-01 00:00:00', creationDate) AS creationTimestamp FROM user WHERE id = :id");
     $request->execute(['id' => $id]);
     return $request->fetch(PDO::FETCH_OBJ);
 };

@@ -31,6 +31,10 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/in
 
 require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/post.php";
 
+
+$nbPosts = $countPostFor($user->id);
+$nbLike = $getCountInteractionByType($user->id, "LIKE");
+$date = date('d/m/Y H:i:s', $user->creationTimestamp);
 ?>
 <body>
 
@@ -50,24 +54,24 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/po
         <div class="profile-details">
             <div class="card desc" style="width: 56.5rem;">
                 <div class="card-body">
-                    <p class="card-text">Je viens d'arriver ici, bonjour !</p>
+                    <p class="card-text"><?=$user->bio?></p>
                 </div>
             </div>
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                    <p class="card-text"><i class="bi bi-calendar"></i> Date d'inscription: <?php echo date('d/m/Y'); ?></p>
+                    <p class="card-text"><i class="bi bi-calendar"></i> <?= $date ?></p>
 
                 </div>
             </div>
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                    <p class="card-text"><i class="bi bi-chat-dots"></i> Nombre de Beeps: 100</p>
+                    <p class="card-text"><i class="bi bi-chat-dots"></i> <?= $nbPosts?></p>
 
                 </div>
             </div>
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                    <p class="card-text"><i class="bi bi-heart"></i> Nombre de likes reçus: 500</p>
+                    <p class="card-text"><i class="bi bi-heart"></i> <?= $nbLike?></p>
 
                 </div>
             </div>
@@ -77,7 +81,7 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/po
 
 
 </div>
-
+<div id="beep-full-container">
 <?php
 
 $getBeepsFrom($user->id);
@@ -87,7 +91,7 @@ require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/utils/mess
 require parse_ini_file(dirname(__DIR__).'/beepot/.env')['DOC_ROOT']."/manager/createPost.php";
 ?>
 <div class="popup" id="popup" onclick="popupClick()">
-</div>
+</div></div>
 <script src="./js/beepLoader.js"></script>
 <script src="./js/beepInteractions.js"></script>
 <script src="./js/utils.js"></script>
